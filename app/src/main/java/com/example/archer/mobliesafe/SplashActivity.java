@@ -1,11 +1,20 @@
 package com.example.archer.mobliesafe;
 
+import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TextView;
 
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +27,39 @@ import java.net.URL;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private static final  int CODE_UPDATE_DIAOG=0;
+    private static final int CODE_URL_ERROR =1 ;
+    private static final int CODE_NET_ERROR =2 ;
+    private static final int CODE_JSON_ERROR =3 ;
+
+    //服务器的信息
+    private String mVersionName;
+    private int mVersionCode;
+    private String mDownloadUrl;
+    private String mDescription;
+
+    private Handler mhandler= new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch(msg.what){
+                case CODE_UPDATE_DIAOG:
+                    showUpdateDailog();
+                break;
+                case CODE_URL_ERROR:
+                    Toast.makeText(SplashActivity.this,"url错误",Toast.LENGTH_SHORT).show();
+                break;
+                case CODE_NET_ERROR:
+                    Toast.makeText(SplashActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
+
+                break;
+                case CODE_JSON_ERROR:
+                    Toast.makeText(SplashActivity.this,"数据解析错误",Toast.LENGTH_SHORT).show();
+
+                break;
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +70,11 @@ public class SplashActivity extends AppCompatActivity {
         assert textView != null;
         textView.setText("版本名称：" + getVersionName());
 
+
         checkVersion();
     }
 
-
+    //获取版本名称
     private String getVersionName() {
 
         PackageManager packageManager = getPackageManager();
@@ -42,7 +85,7 @@ public class SplashActivity extends AppCompatActivity {
             int versionCode = packageInfo.versionCode;
             String versionName = packageInfo.versionName;
 
-            System.out.println("versionName=" + versionName + ";versionCode=" + versionCode);
+//            System.out.println("versionName=" + versionName + ";versionCode=" + versionCode);
 
             return versionName;
         } catch (PackageManager.NameNotFoundException e) {
@@ -51,6 +94,26 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         return "";
+    }
+    private int getVersionCode() {
+
+        PackageManager packageManager = getPackageManager();
+
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
+
+            int versionCode = packageInfo.versionCode;
+            String versionName = packageInfo.versionName;
+
+//            System.out.println("versionName=" + versionName + ";versionCode=" + versionCode);
+
+            return versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            //没找到包名的时候处理异常
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
     /**
@@ -64,9 +127,11 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                super.run();
 
-                HttpURLConnection conn ;
+                //用handler发消息
+                Message msg=Message.obtain();
+
+                HttpURLConnection conn=null ;
                 try {
                     /**
                      * 注意调试的时候：
@@ -96,21 +161,85 @@ public class SplashActivity extends AppCompatActivity {
                             result.append(line);
 
                         }
-                        System.out.println("网络返回:" + result);
+//                        System.out.println("网络返回:" + result);
+
+                        JSONObject jsonObject= new JSONObject(String.valueOf(result));
+                        mDescription = jsonObject.getString("description");
+                        mVersionCode=jsonObject.getInt("versionCode");
+                        mVersionName=jsonObject.getString("versionName");
+                        mDownloadUrl=jsonObject.getString("downloadUrl");
+
+/**
+ System.out.println(mDescription);
+ System.out.println(mDownloadUrl);
+ System.out.println(mVersionName);
+ System.out.println(mVersionCode);
+ */
+
+                        if (mVersionCode>getVersionCode()){
+                            /**
+                             * 说明有更新
+                             * 更新，弹出升级对话框
+                             */
+
+                            
+                            msg.what=CODE_UPDATE_DIAOG;
+
+
+
+
+                        }
+
+
+
+
+
+
 
                     }
                 } catch (MalformedURLException e) {
 
-                    System.out.println("连接异常");
+                    System.out.println("URL异常");
+                    msg.what=CODE_URL_ERROR;
                     e.printStackTrace();
                 } catch (IOException e) {
-                    System.out.println("url异常");
+                    System.out.println("网络异常");
+                    msg.what=CODE_NET_ERROR;
                     e.printStackTrace();
+                } catch (JSONException e) {
+                    System.out.println("json解析失败");
+                    msg.what=CODE_JSON_ERROR;
+                    e.printStackTrace();
+                }finally {
+                    mhandler.sendMessage(msg);
+                    if (conn!=null){
+                       conn.disconnect();
+                    }
                 }
 
 
             }
 
+
+
         }.start();
+    }
+
+    /**
+     * 弹出对话框
+     */
+    private void showUpdateDailog() {
+        AlertDialog.Builder builder= new AlertDialog.Builder(this);
+        builder.setTitle("最新版本"+mVersionName);
+        builder.setMessage(mDescription);
+        builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                System.out.println("立即更新");
+            }
+        });
+
+        builder.setNegativeButton("以后再说",null);
+        builder.show();
     }
 }
