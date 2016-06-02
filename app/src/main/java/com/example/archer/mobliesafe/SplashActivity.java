@@ -4,26 +4,39 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+/**
+ * Xutils框架的使用
+ *
+ */
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -33,6 +46,8 @@ public class SplashActivity extends AppCompatActivity {
     private static final int CODE_NET_ERROR =2 ;
     private static final int CODE_JSON_ERROR =3 ;
     private static final int CODE_ENTER_HOME=4;//进入主页面
+
+    private TextView tvPrograss;
 
     //服务器的信息
     private String mVersionName;
@@ -78,6 +93,8 @@ public class SplashActivity extends AppCompatActivity {
 
         assert textView != null;
         textView.setText("版本名称：" + getVersionName());
+
+        tvPrograss= (TextView) findViewById(R.id.tv_downProcess);
 
 
         checkVersion();
@@ -152,8 +169,9 @@ public class SplashActivity extends AppCompatActivity {
                      * 4.若是genymotion或者是真机，IP地址应该为PC的IP地址
                      * 5.android权限记得添加
                      * 6.若使用真机调试，保证PC和真机在同一局域网，并关闭防火墙
+                     * 7.当重启电脑的时候，记得更改IP地址，部属到tomcat和java代码中的
                      */
-                    URL url = new URL("http://113.55.76.152:8080/update.json");
+                    URL url = new URL("http://113.55.77.211:8080/update.json");
 //                    URL url = new URL("http://169.254.163.216:8080/update.json");
 //                    URL url = new URL("http://192.168.1.201:8080/update.json");
                     conn = (HttpURLConnection) url.openConnection();
@@ -182,7 +200,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
 // System.out.println(mDescription);
-// System.out.println(mDownloadUrl);
+ System.out.println(mDownloadUrl);
 // System.out.println(mVersionName);
 // System.out.println(mVersionCode);
 
@@ -254,6 +272,9 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 System.out.println("立即更新");
+                
+                //写一个下载的方法
+                downLoad();
             }
         });
 
@@ -268,6 +289,67 @@ public class SplashActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * 下载APK文件
+     */
+    private void downLoad() {
+        //判断是够有sd卡
+        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            /**
+             * 三个参数，第一个是传入下载的地址，第二个传入文件将要存放的路径
+             * 第三个参数是回调函数。
+             */
+
+        //显示出进度框的
+            tvPrograss.setVisibility(View.VISIBLE);
+
+
+
+            final String target= Environment.getExternalStorageDirectory()+"/update.apk";
+
+            //XUtils开源框架
+            HttpUtils utils=new HttpUtils();
+            utils.download(mDownloadUrl, target, new RequestCallBack<File>() {
+
+                //下载成功
+                @Override
+                public void onSuccess(ResponseInfo<File> responseInfo) {
+
+                    System.out.println("下载成功");
+                }
+
+                @Override
+                public void onFailure(HttpException error, String msg) {
+                    System.out.println(error);
+
+                    Toast.makeText(SplashActivity.this,"下载失败",Toast.LENGTH_SHORT).show();
+
+                }
+
+                @Override
+                public void onLoading(long total, long current, boolean isUploading) {
+                    /**
+                     * 文件的下载进度
+                     */
+                    System.out.println("下载进度"+current+"/"+total);
+
+                    super.onLoading(total, current, isUploading);
+
+                    tvPrograss.setText("下载进度"+current*100/total+"%");
+
+                }
+            });
+        }else {
+            Toast.makeText(SplashActivity.this,"没有SD卡，无法下载",Toast.LENGTH_SHORT).show();
+        }
+
+
+
+    }
+
+    /**
+     * 进入主界面
+     */
     private  void  enterHome(){
 
         Intent intent=new Intent(SplashActivity.this,HomeActivity.class);
