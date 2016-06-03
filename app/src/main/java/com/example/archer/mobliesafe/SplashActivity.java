@@ -1,5 +1,6 @@
 package com.example.archer.mobliesafe;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -269,6 +270,8 @@ public class SplashActivity extends AppCompatActivity {
         AlertDialog.Builder builder= new AlertDialog.Builder(this);
         builder.setTitle("最新版本"+mVersionName);
         builder.setMessage(mDescription);
+        //不让用户点击返回,用户体验太差，尽量不要用
+//        builder.setCancelable(false);
         builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -285,6 +288,16 @@ public class SplashActivity extends AppCompatActivity {
 //点击跳准
                 enterHome();
                 System.out.println("12345678");
+            }
+        });
+
+        //设置一个取消监听,当用户点击返回按钮的时候，就走到这
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+
+                enterHome();
+
             }
         });
         builder.show();
@@ -325,7 +338,11 @@ public class SplashActivity extends AppCompatActivity {
                     intent.setDataAndType(Uri.fromFile(responseInfo.result)
                             ,"application/vnd.android.package-archive");
                     //一定要注意的是启动intent
-                    startActivity(intent);
+//                    startActivity(intent);
+                    //如果用户取消安装的时候返回结果
+                    startActivityForResult(intent,0);
+
+
 
 
                 }
@@ -355,9 +372,19 @@ public class SplashActivity extends AppCompatActivity {
         }else {
             Toast.makeText(SplashActivity.this,"没有SD卡，无法下载",Toast.LENGTH_SHORT).show();
         }
+    }
 
-
-
+    /**
+     * 点击startActivityForResult返回结果的回调方法
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//进入主界面
+        enterHome();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
