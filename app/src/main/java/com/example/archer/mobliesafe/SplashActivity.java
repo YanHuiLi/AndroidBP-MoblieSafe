@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -171,7 +172,7 @@ public class SplashActivity extends AppCompatActivity {
                      * 6.若使用真机调试，保证PC和真机在同一局域网，并关闭防火墙
                      * 7.当重启电脑的时候，记得更改IP地址，部属到tomcat和java代码中的
                      */
-                    URL url = new URL("http://113.55.77.211:8080/update.json");
+                    URL url = new URL("http://113.55.42.79:8080/update.json");
 //                    URL url = new URL("http://169.254.163.216:8080/update.json");
 //                    URL url = new URL("http://192.168.1.201:8080/update.json");
                     conn = (HttpURLConnection) url.openConnection();
@@ -200,7 +201,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
 // System.out.println(mDescription);
- System.out.println(mDownloadUrl);
+                        System.out.println(mDownloadUrl);
 // System.out.println(mVersionName);
 // System.out.println(mVersionCode);
 
@@ -272,7 +273,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 System.out.println("立即更新");
-                
+
                 //写一个下载的方法
                 downLoad();
             }
@@ -300,7 +301,7 @@ public class SplashActivity extends AppCompatActivity {
              * 第三个参数是回调函数。
              */
 
-        //显示出进度框的
+            //显示出进度框的
             tvPrograss.setVisibility(View.VISIBLE);
 
 
@@ -316,6 +317,17 @@ public class SplashActivity extends AppCompatActivity {
                 public void onSuccess(ResponseInfo<File> responseInfo) {
 
                     System.out.println("下载成功");
+
+                    //跳转到系统下载页面
+
+                    Intent intent=new Intent(Intent.ACTION_VIEW);
+                    intent.addCategory(Intent.CATEGORY_DEFAULT);
+                    intent.setDataAndType(Uri.fromFile(responseInfo.result)
+                            ,"application/vnd.android.package-archive");
+                    //一定要注意的是启动intent
+                    startActivity(intent);
+
+
                 }
 
                 @Override
@@ -336,6 +348,7 @@ public class SplashActivity extends AppCompatActivity {
                     super.onLoading(total, current, isUploading);
 
                     tvPrograss.setText("下载进度"+current*100/total+"%");
+                    System.out.println("current="+current);
 
                 }
             });
@@ -355,7 +368,7 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent=new Intent(SplashActivity.this,HomeActivity.class);
         //不要忘记startactivity
         startActivity(intent);
-           finish();
+        finish();
     }
 
 

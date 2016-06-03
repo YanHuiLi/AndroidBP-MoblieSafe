@@ -19,9 +19,7 @@ public class StreamUtils {
         byte[] buffer=new byte[1024];
 
         while ((len=inputStream.read())!=-1){
-
             outputStream.write(buffer,0,len);
-
         }
 
         String result=outputStream.toString();
