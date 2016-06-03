@@ -178,8 +178,8 @@ public class SplashActivity extends AppCompatActivity {
 //                    URL url = new URL("http://192.168.1.201:8080/update.json");
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");// 设置请求方法
-                    conn.setConnectTimeout(5000);// 设置连接超时
-                    conn.setReadTimeout(5000);// 设置响应超时, 连接上了,但服务器迟迟不给响应
+                    conn.setConnectTimeout(3000);// 设置连接超时
+                    conn.setReadTimeout(3000);// 设置响应超时, 连接上了,但服务器迟迟不给响应
                     conn.connect();// 连接服务器
 
                     int responseCode = conn.getResponseCode();// 获取响应码

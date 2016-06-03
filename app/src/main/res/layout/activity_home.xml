@@ -6,11 +6,36 @@
 
     <TextView
         android:id="@+id/tv_home"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="功能列表"
+        android:textColor="@color/black"
+        android:background="#8866ff00"
+        android:textSize="18sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="我是主页面"
-        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:text="手机卫士，保护您的手机,腰不酸，腿不疼，一口气五楼不费劲"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"/>
 
 
-        android:textSize="20sp"/>
+    <GridView
+        android:id="@+id/gv_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:verticalSpacing="20dp"
+        android:numColumns="3">
+
+
+    </GridView>
 </LinearLayout>
