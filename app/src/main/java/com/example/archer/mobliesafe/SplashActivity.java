@@ -3,6 +3,7 @@ package com.example.archer.mobliesafe;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -98,8 +99,18 @@ public class SplashActivity extends AppCompatActivity {
 
         tvPrograss= (TextView) findViewById(R.id.tv_downProcess);
 
+        final SharedPreferences mPref = getSharedPreferences("config", MODE_PRIVATE);
+        //判断是否要自动更新
+        boolean autoUpdate =mPref.getBoolean("auto_update",true);
+        if (autoUpdate){
+            checkVersion();
+        }else{
+            //设置2s后进入主界面
+//            enterHome();
+            mhandler.sendEmptyMessageDelayed(CODE_ENTER_HOME,2000);
+        }
 
-        checkVersion();
+
     }
 
     //获取版本名称
@@ -173,7 +184,7 @@ public class SplashActivity extends AppCompatActivity {
                      * 6.若使用真机调试，保证PC和真机在同一局域网，并关闭防火墙
                      * 7.当重启电脑的时候，记得更改IP地址，部属到tomcat和java代码中的
                      */
-                    URL url = new URL("http://113.55.42.79:8080/update.json");
+                    URL url = new URL("http://192.168.2.36:8080/update.json");
 //                    URL url = new URL("http://169.254.163.216:8080/update.json");
 //                    URL url = new URL("http://192.168.1.201:8080/update.json");
                     conn = (HttpURLConnection) url.openConnection();

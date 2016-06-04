@@ -6,13 +6,9 @@
 
     <TextView
         android:id="@+id/tv_home"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+       style="@style/TitleStyle"
         android:text="功能列表"
-        android:textColor="@color/black"
-        android:background="#8866ff00"
-        android:textSize="18sp"
-        android:gravity="center"/>
+     />
 
     <TextView
         android:layout_width="match_parent"

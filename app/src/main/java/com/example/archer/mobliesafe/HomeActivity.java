@@ -1,9 +1,11 @@
 package com.example.archer.mobliesafe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -35,6 +37,25 @@ public class HomeActivity extends AppCompatActivity{
 
         assert gvHome != null;
         gvHome.setAdapter(new HomeAdapter());
+        //设置主页面的监听
+        gvHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //响应点击事件，position 0到8
+
+                switch (position){
+
+                    case 8:
+                        //点击设置中心的时候，跳转过去
+
+                        startActivity(new Intent(HomeActivity.this,SettingActivity.class));
+                        break;
+
+
+
+                }
+            }
+        });
 
     }
 
