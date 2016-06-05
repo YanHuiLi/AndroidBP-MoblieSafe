@@ -121,8 +121,10 @@ public class HomeActivity extends AppCompatActivity{
                     String savedPassWord = login.getString("PassWord", null);
                     if (MD5Utils.enCode(passWord).equals(savedPassWord)){
                         Toast.makeText(HomeActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
-
                         dialog.dismiss();
+
+                        //跳转到防盗页面
+                        startActivity(new Intent(HomeActivity.this,LostFoundActivity.class));
                     }else {
 
                         Toast.makeText(HomeActivity.this,"密码错误",Toast.LENGTH_SHORT).show();
@@ -183,6 +185,9 @@ public class HomeActivity extends AppCompatActivity{
                         login.edit().putString("PassWord", MD5Utils.enCode(passWord)).commit();
 
                         dialog.dismiss();
+                        //跳转到防盗页面
+                        startActivity(new Intent(HomeActivity.this,LostFoundActivity.class));
+
 
                     }else {
                         Toast.makeText(HomeActivity.this,"两次密码不一致",Toast.LENGTH_SHORT).show();

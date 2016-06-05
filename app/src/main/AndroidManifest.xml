@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.archer.mobliesafe"
->
-<uses-permission android:name="android.permission.INTERNET" />
+    >
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -28,7 +28,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity"/>
-    <activity android:name=".SettingActivity"/>
+        <activity android:name=".SettingActivity"/>
+        <activity android:name=".LostFoundActivity"/>
+    <activity android:name=".Setup1Activity"/>
     </application>
 
 </manifest>
