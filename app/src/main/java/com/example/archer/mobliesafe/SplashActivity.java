@@ -15,6 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,6 +88,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         }
     };
+    private RelativeLayout rlRoot;
 
 
     @Override
@@ -99,6 +102,9 @@ public class SplashActivity extends AppCompatActivity {
 
         tvPrograss= (TextView) findViewById(R.id.tv_downProcess);
 
+        //根布局
+        rlRoot = (RelativeLayout) findViewById(R.id.rl_root);
+
         final SharedPreferences mPref = getSharedPreferences("config", MODE_PRIVATE);
         //判断是否要自动更新
         boolean autoUpdate =mPref.getBoolean("auto_update",true);
@@ -111,6 +117,10 @@ public class SplashActivity extends AppCompatActivity {
         }
 
 
+        //渐变的动画效果
+        AlphaAnimation animation=new AlphaAnimation(0.3f,1f);
+        animation.setDuration(2000);
+        rlRoot.startAnimation(animation);
     }
 
     //获取版本名称

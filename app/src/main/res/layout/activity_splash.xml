@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
+    android:id="@+id/rl_root"
     android:background="@drawable/launcher_bg">
 
 
