@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.archer.mobliesafe.utils.MD5Utils;
+
 /**
  * 主页面
  * Created by Archer on 2016/6/2.
@@ -117,7 +119,7 @@ public class HomeActivity extends AppCompatActivity{
 
                 if (!TextUtils.isEmpty(passWord)){
                     String savedPassWord = login.getString("PassWord", null);
-                    if (passWord.equals(savedPassWord)){
+                    if (MD5Utils.enCode(passWord).equals(savedPassWord)){
                         Toast.makeText(HomeActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
 
                         dialog.dismiss();
@@ -177,7 +179,8 @@ public class HomeActivity extends AppCompatActivity{
                     if (passWord.equals(passWordConfirm)){
 
                         Toast.makeText(HomeActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
-                      login.edit().putString("PassWord",passWord).commit();
+                        //保存密码
+                        login.edit().putString("PassWord", MD5Utils.enCode(passWord)).commit();
 
                         dialog.dismiss();
 
