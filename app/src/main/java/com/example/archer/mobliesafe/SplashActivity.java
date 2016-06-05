@@ -184,8 +184,8 @@ public class SplashActivity extends AppCompatActivity {
                      * 6.若使用真机调试，保证PC和真机在同一局域网，并关闭防火墙
                      * 7.当重启电脑的时候，记得更改IP地址，部属到tomcat和java代码中的
                      */
-                    URL url = new URL("http://192.168.2.36:8080/update.json");
-//                    URL url = new URL("http://169.254.163.216:8080/update.json");
+//                    URL url = new URL("http://192.168.191.3:8080/update.json");
+                    URL url = new URL("http://169.254.163.216:8080/update.json");
 //                    URL url = new URL("http://192.168.1.201:8080/update.json");
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");// 设置请求方法
