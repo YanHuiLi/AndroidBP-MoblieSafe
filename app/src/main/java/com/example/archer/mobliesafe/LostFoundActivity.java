@@ -19,7 +19,7 @@ public class LostFoundActivity  extends Activity{
         //设置是否设置过向导
         boolean configed = mPref.getBoolean("configed",false);
         if(configed){
-
+            setContentView(R.layout.activity_lost_found);
 
         }else {
             //跳转设置向导

@@ -120,7 +120,6 @@ public class HomeActivity extends AppCompatActivity{
                 if (!TextUtils.isEmpty(passWord)){
                     String savedPassWord = login.getString("PassWord", null);
                     if (MD5Utils.enCode(passWord).equals(savedPassWord)){
-                        Toast.makeText(HomeActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
 
                         //跳转到防盗页面
@@ -180,7 +179,7 @@ public class HomeActivity extends AppCompatActivity{
 
                     if (passWord.equals(passWordConfirm)){
 
-                        Toast.makeText(HomeActivity.this,"登陆成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this,"注册成功",Toast.LENGTH_SHORT).show();
                         //保存密码
                         login.edit().putString("PassWord", MD5Utils.enCode(passWord)).commit();
 

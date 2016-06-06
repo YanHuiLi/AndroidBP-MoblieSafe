@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:archer="http://schemas.android.com/apk/res/com.example.archer.mobliesafe"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <TextView
         style="@style/TitleStyle"
-        android:text="1.欢迎使用手机防盗"/>
+        android:text="3.设置安全号码"/>
+    
+    <TextView
+        style="@style/ContentStyle"
+        android:text="SIM卡变更后："/>
 
     <TextView
-        android:layout_width="wrap_content"
+        style="@style/ContentStyle"
+        android:text="报警短信会发送给安全号码"/>
+
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:text="您的手机防盗卫士："/>
+        android:hint="请输入或选择安全号码："
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请选择联系人："
+        android:background="@drawable/btn_light_green_selector"
 
-    <TextView
-        style="@style/ContentStyle"
-        android:gravity="center"
-        android:drawableLeft="@android:drawable/star_big_on"
-        android:text="SIM卡变更报警"/>
-    <TextView
-        style="@style/ContentStyle"
-        android:gravity="center"
-        android:drawableLeft="@android:drawable/star_big_on"
-        android:text="GPS追踪"/>
-    <TextView
-        style="@style/ContentStyle"
-        android:gravity="center"
-        android:drawableLeft="@android:drawable/star_big_on"
-        android:text="远程销毁数据"/>
-    <TextView
-        style="@style/ContentStyle"
-        android:gravity="center"
-        android:drawableLeft="@android:drawable/star_big_on"
-        android:text="远程锁屏"/>
+        />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,17 +40,17 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_invisible"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_invisible"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@android:drawable/presence_online"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/presence_invisible"
-            />
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/presence_invisible"
             />
         <ImageView
             android:layout_width="wrap_content"
@@ -78,11 +72,15 @@
             android:id="@+id/imageView"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/setup1"/>
+            android:src="@drawable/setup3"/>
 
         <Button
-            style="@style/NextStyle" />
+           style="@style/NextStyle"
+           />
 
+
+        <Button
+            style="@style/PreviousStyle"/>
 
 
     </RelativeLayout>

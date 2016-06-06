@@ -28,7 +28,52 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:text="您的手机防盗卫士："/>
+        
+          <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下一步"
+            android:id="@+id/button"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_green_selector"
+            android:drawableRight="@drawable/next"/>
+
+            <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="上一步"
+            android:id="@+id/button2"
+            android:background="@drawable/btn_green_selector"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:drawableLeft="@drawable/previous"
+            android:onClick="previous"/>
         -->
+
+    <style name="PreviousStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:drawableLeft">@drawable/previous</item>
+        <item name="android:background">@drawable/btn_green_selector</item>
+        <item name="android:text">"上一步"</item>
+        <item name="android:onClick">"previous"</item>
+
+    </style>
+    <style name="NextStyle">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_alignParentBottom">true</item>
+    <item name="android:layout_alignParentRight">true</item>
+    <item name="android:drawableRight">@drawable/next</item>
+    <item name="android:background">@drawable/btn_green_selector</item>
+    <item name="android:text">"下一步"</item>
+    <item name="android:onClick">"next"</item>
+
+    </style>
+    
     <style name="ContentStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
