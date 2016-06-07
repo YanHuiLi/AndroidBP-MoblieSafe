@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 /**
  * Created by Archer on 2016/6/5.
@@ -26,5 +27,12 @@ public class LostFoundActivity  extends Activity{
             startActivity(new Intent(this,Setup1Activity.class));
             finish();
         }
+    }
+
+    //重新进入设置向导
+    public void reEnter(View view) {
+        startActivity(new Intent(this,Setup1Activity.class));
+        finish();
+
     }
 }

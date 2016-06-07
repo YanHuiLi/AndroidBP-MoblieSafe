@@ -20,6 +20,9 @@ public class Setup1Activity extends Activity{
     public void next(View view){
         startActivity(new Intent(this,Setup2Activity.class));
         finish();
+
+        //调转的动画
+        overridePendingTransition(R.anim.trans_in,R.anim.trans_out);
     }
 
 }
