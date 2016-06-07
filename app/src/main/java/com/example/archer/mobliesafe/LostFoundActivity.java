@@ -33,6 +33,8 @@ public class LostFoundActivity  extends Activity{
     public void reEnter(View view) {
         startActivity(new Intent(this,Setup1Activity.class));
         finish();
+        overridePendingTransition(R.anim.trans_in,R.anim.trans_out);
+
 
     }
 }

@@ -74,11 +74,13 @@
 
         <Button
            style="@style/NextStyle"
+
            />
 
 
         <Button
-            style="@style/PreviousStyle"/>
+            style="@style/PreviousStyle"
+            />
 
 
     </RelativeLayout>
