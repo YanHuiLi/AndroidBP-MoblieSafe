@@ -2,6 +2,9 @@ package com.example.archer.mobliesafe;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
+import com.example.archer.mobliesafe.view.SettingItemView;
 
 /**
  * 设置向导页面
@@ -10,12 +13,24 @@ import android.os.Bundle;
 public class Setup2Activity extends BaseSetupActivity{
 
 
+    private SettingItemView sivSIM;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup2);
-
-
+        sivSIM = (SettingItemView) findViewById(R.id.siv_sim);
+        sivSIM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sivSIM.isChecked()){
+                    sivSIM.setCheck(false);
+                }else {
+                    sivSIM.setCheck(true);
+                    //保存sim卡的信息
+                }
+            }
+        });
     }
     public  void showNextPage() {
         startActivity(new Intent(this,Setup3Activity.class));
