@@ -1,11 +1,12 @@
 package com.example.archer.mobliesafe;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  *
@@ -18,9 +19,13 @@ import android.view.View;
 public abstract class BaseSetupActivity extends Activity {
 
     private GestureDetector mDetector;
+    public SharedPreferences mPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPref = getSharedPreferences("config", MODE_PRIVATE);
+
         //监听手势滑动
         mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener(){
             @Override
@@ -41,6 +46,19 @@ public abstract class BaseSetupActivity extends Activity {
                  * 注意区别和使用
                  */
 
+                //判断纵向滑动是否过大，过大不允许滑动
+                if (Math.abs(e2.getRawY()-e1.getRawY())>100){
+                    Toast.makeText(BaseSetupActivity.this,"不能这样滑动",Toast.LENGTH_SHORT).show();
+
+                    return true;
+                }
+
+                //判断滑动是否过慢
+                if (Math.abs(velocityX)<100){
+                    Toast.makeText(BaseSetupActivity.this,"你滑动的太慢了",Toast.LENGTH_SHORT).show();
+
+                }
+
                 if (e2.getRawX()-e1.getRawX()>200){
 
                     showPreviousPage();
@@ -53,6 +71,8 @@ public abstract class BaseSetupActivity extends Activity {
                     showNextPage();
                     return true;
                 }
+
+
                 return super.onFling(e1, e2, velocityX, velocityY);
             }
         });
