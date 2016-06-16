@@ -6,6 +6,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.example.archer.mobliesafe.utils.ToastUtils;
 import com.example.archer.mobliesafe.view.SettingItemView;
 
 /**
@@ -51,6 +52,14 @@ public class Setup2Activity extends BaseSetupActivity{
         });
     }
     public  void showNextPage() {
+
+        //如果sim卡没有绑定就不能到下一个页面
+        String sim = mPref.getString("sim", null);
+        if (TextUtils.isEmpty(sim)){
+
+            ToastUtils.showToast(this,"必须绑定sim卡");
+            return;
+        }
         startActivity(new Intent(this,Setup3Activity.class));
         finish();
 
