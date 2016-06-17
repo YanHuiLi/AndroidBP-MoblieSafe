@@ -30,7 +30,8 @@ public class BootCompleteReceiver  extends BroadcastReceiver{
                 //获取本地的sim卡
                 TelephonyManager telephonyManager= (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
                 //当前的sim卡
-                String CurrentsimSerialNumber = telephonyManager.getSimSerialNumber();
+                String CurrentsimSerialNumber = telephonyManager.getSimSerialNumber()+"123";
+//                System.out.println(CurrentsimSerialNumber);
                 if (sim.equals(CurrentsimSerialNumber)){
                     System.out.println("手机安全");
                 }else{
