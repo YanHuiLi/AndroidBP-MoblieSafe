@@ -17,11 +17,11 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-   <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    
+
     <!--@style/Theme.AppCompat.Light-->
     <application
         android:allowBackup="true"
@@ -44,7 +44,7 @@
         <activity android:name=".Setup3Activity"/>
         <activity android:name=".Setup4Activity"/>
         <activity android:name=".ContactActivity"/>
-
+        <activity android:name=".AToolsActivity"/>
         <receiver android:name=".receiver.BootCompleteReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -57,7 +57,7 @@
             </intent-filter>
         </receiver>
 
-<service android:name=".service.LocationService"/>
+        <service android:name=".service.LocationService"/>
     </application>
 
 </manifest>

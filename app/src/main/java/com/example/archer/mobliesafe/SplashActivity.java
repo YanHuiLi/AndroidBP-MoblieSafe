@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -31,6 +32,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -106,9 +108,12 @@ public class SplashActivity extends AppCompatActivity {
         rlRoot = (RelativeLayout) findViewById(R.id.rl_root);
 
         final SharedPreferences mPref = getSharedPreferences("config", MODE_PRIVATE);
+
+        copyDB("address.db");//拷贝归属地查询数据库
         //判断是否要自动更新
         boolean autoUpdate =mPref.getBoolean("auto_update",true);
         if (autoUpdate){
+
             checkVersion();
         }else{
             //设置2s后进入主界面
@@ -417,6 +422,50 @@ public class SplashActivity extends AppCompatActivity {
         //不要忘记startactivity
         startActivity(intent);
         finish();
+    }
+
+    /**
+     * 拷贝数据库
+     * @param dbName
+     */
+    private  void copyDB(String dbName){
+//        File fileDir=getFilesDir();
+//        System.out.println("路径"+fileDir);
+
+        File destFile=new File(getFilesDir(),dbName);//要拷贝的目标地址
+
+       if (destFile.exists()){
+           System.out.println("数据库已经存在");
+           return;
+       }
+
+
+        InputStream inputStream=null;
+        FileOutputStream outputStream=null;
+
+        try {
+             inputStream=getAssets().open(dbName);
+            outputStream=new FileOutputStream(destFile);
+
+            int len=0;
+
+            byte[] buffer=new byte[1024];
+            while ((len=inputStream.read(buffer))!=-1){
+
+                outputStream.write(buffer,0,len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+
+            try {
+                inputStream.close();
+                outputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
 

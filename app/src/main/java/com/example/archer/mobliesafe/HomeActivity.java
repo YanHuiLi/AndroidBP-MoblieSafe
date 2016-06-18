@@ -62,6 +62,11 @@ public class HomeActivity extends AppCompatActivity{
                         //手机防盗
                         showPassWordDialog();
                         break;
+                    case 7:
+                        //高级工具开发
+                        startActivity(new Intent(HomeActivity.this,AToolsActivity.class));
+
+                        break;
                     case 8:
                         //点击设置中心的时候，跳转过去
 
