@@ -21,7 +21,8 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!--@style/Theme.AppCompat.Light-->
     <application
         android:allowBackup="true"
@@ -45,6 +46,8 @@
         <activity android:name=".Setup4Activity"/>
         <activity android:name=".ContactActivity"/>
         <activity android:name=".AToolsActivity"/>
+        <activity android:name=".AddressActivity"/>
+
         <receiver android:name=".receiver.BootCompleteReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
