@@ -7,6 +7,11 @@ import android.content.SharedPreferences;
 import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.widget.Toast;
+
+import com.example.archer.mobliesafe.utils.ToastUtils;
+
+import static android.widget.Toast.LENGTH_SHORT;
 
 /**
  * 监听开机启动的广播
@@ -22,6 +27,8 @@ public class BootCompleteReceiver  extends BroadcastReceiver{
 
         //只有在防盗保护开启的前提下才进行sim卡判断
         if (protect){
+
+            ToastUtils.showToast(context,"boot已经启动");
 
             String sim = sp.getString("sim", null);//获取绑定的sim卡
 
