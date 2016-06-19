@@ -19,5 +19,14 @@
         archer:desc_off="自动更新已经关闭"
         />
 
+    <com.example.archer.mobliesafe.view.SettingItemView
+        android:id="@+id/siv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        archer:SetItemTitle="归属地电话显示设置"
+        archer:desc_on="归属地显示已经开启"
+        archer:desc_off="归属地显示已经关闭"
+        />
+
 
 </LinearLayout>

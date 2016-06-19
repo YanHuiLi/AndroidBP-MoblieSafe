@@ -53,7 +53,8 @@ public class AddressActivity extends Activity{
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                String address = AddressDao.getAddress(s.toString());
+                tvResult.setText(address);
             }
         });
 

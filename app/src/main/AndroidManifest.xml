@@ -61,6 +61,8 @@
         </receiver>
 
         <service android:name=".service.LocationService"/>
+        <service android:name=".service.AddressService"/>
+
     </application>
 
 </manifest>
