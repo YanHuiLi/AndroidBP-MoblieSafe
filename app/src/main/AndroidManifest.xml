@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     <!--@style/Theme.AppCompat.Light-->
     <application
         android:allowBackup="true"
@@ -59,6 +60,11 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
         </receiver>
+        <!--<receiver android:name=".receiver.OutCallReceiver">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.NEW_OUTGOING_CALL"/>-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <service android:name=".service.LocationService"/>
         <service android:name=".service.AddressService"/>
