@@ -48,6 +48,8 @@
         <activity android:name=".ContactActivity"/>
         <activity android:name=".AToolsActivity"/>
         <activity android:name=".AddressActivity"/>
+        <activity android:name=".DragViewActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <receiver android:name=".receiver.BootCompleteReceiver">
             <intent-filter>

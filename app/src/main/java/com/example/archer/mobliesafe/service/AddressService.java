@@ -11,6 +11,7 @@ import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -135,6 +136,13 @@ public class AddressService extends Service {
                 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 
+        mParams.gravity= Gravity.LEFT+Gravity.TOP;//将中心位置设置成左上方，默认是居中
+        int lastX = mPref.getInt("lastX", 0);
+        int lastY = mPref.getInt("lastY", 0);
+
+        //设置浮窗的位置，基于左上方的偏移量
+        mParams.x=lastX;
+        mParams.y=lastY;
 
         view=  View.inflate(this, R.layout.toast_address,null);
 

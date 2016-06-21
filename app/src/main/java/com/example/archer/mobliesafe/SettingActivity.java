@@ -22,6 +22,7 @@ public class SettingActivity extends Activity{
     private SettingItemView settingItemView;
     private SettingItemView sivAddress;
     private SettingClickView scvAddressStyle;//修改风格
+    private  SettingClickView scvAddressLocation;
     private SharedPreferences mPref;
 
     @Override
@@ -34,6 +35,7 @@ public class SettingActivity extends Activity{
         initUpdateView();
         initAddressView();
         initAddressStyle();
+        initAddressLocation();
     }
 
 
@@ -165,4 +167,24 @@ public class SettingActivity extends Activity{
         builder.show();
     }
 
+
+    /**
+     * 初始化归属地位置
+     */
+
+    private void initAddressLocation(){
+
+        scvAddressLocation= (SettingClickView) findViewById(R.id.scv_address_location);
+        scvAddressLocation.setTitle("归属地提示框显示位置");
+        scvAddressLocation.setDec("设置归属地提示框的显示位置");
+
+        scvAddressLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent( SettingActivity.this,DragViewActivity.class));
+            }
+        });
+
+    }
 }
