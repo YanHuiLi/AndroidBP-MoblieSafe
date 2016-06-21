@@ -1,13 +1,16 @@
 package com.example.archer.mobliesafe;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.example.archer.mobliesafe.service.AddressService;
 import com.example.archer.mobliesafe.utils.ServiceStatusUtils;
+import com.example.archer.mobliesafe.view.SettingClickView;
 import com.example.archer.mobliesafe.view.SettingItemView;
 
 /**
@@ -18,6 +21,7 @@ public class SettingActivity extends Activity{
 
     private SettingItemView settingItemView;
     private SettingItemView sivAddress;
+    private SettingClickView scvAddressStyle;//修改风格
     private SharedPreferences mPref;
 
     @Override
@@ -29,6 +33,7 @@ public class SettingActivity extends Activity{
 
         initUpdateView();
         initAddressView();
+        initAddressStyle();
     }
 
 
@@ -109,4 +114,55 @@ public class SettingActivity extends Activity{
         });
 
     }
+
+    final String[] items=new String[]{"半透明","活力橙","卫士蓝","金属灰","苹果绿"};
+
+
+    /**
+     * 修改提示框的显示风格
+     */
+    private void initAddressStyle(){
+
+        scvAddressStyle= (SettingClickView) findViewById(R.id.scv_address_style);
+
+        scvAddressStyle.setTitle("归属地提示框风格");
+        scvAddressStyle.setDec("活力橙");
+        int address_style = mPref.getInt("address_style", 0);//读取默认保存的style
+
+        scvAddressStyle.setDec(items[address_style]);
+        scvAddressStyle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSingleChooseDailog();
+            }
+
+
+        });
+    }
+
+    /**
+     * 弹出选择风格的单选框
+     */
+    private void showSingleChooseDailog() {
+        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setTitle("归属地提示款风格");
+        int address_style = mPref.getInt("address_style", 0);//读取默认保存的style
+
+
+        builder.setSingleChoiceItems(items, address_style, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mPref.edit().putInt("address_style",which).commit();//保存选择的风格
+
+                dialog.dismiss();//让dialog消失
+                scvAddressStyle.setDec(items[which]);//更新组合控件的描述
+            }
+        });
+
+        builder.setNegativeButton("取消",null);
+        builder.show();
+    }
+
 }

@@ -5,6 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
@@ -31,6 +32,7 @@ public class AddressService extends Service {
     private OutCallReceiver receiver;
     private WindowManager mWM;
     private View view;
+    private SharedPreferences mPref;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -42,13 +44,15 @@ public class AddressService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        mPref = getSharedPreferences("config", MODE_PRIVATE);
+
         //监听来电
         tmService = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
 
         mylistener = new MyListener();
         tmService.listen(mylistener, PhoneStateListener.LISTEN_CALL_STATE);//监听打电话的状态
 
-    //动态注册广播
+        //动态注册广播
         receiver = new OutCallReceiver();
         IntentFilter filter=new IntentFilter(Intent.ACTION_NEW_OUTGOING_CALL);
         registerReceiver(receiver,filter);
@@ -66,14 +70,14 @@ public class AddressService extends Service {
 //根据来电号码，查询归属地
                     String address = AddressDao.getAddress(incomingNumber);
 //                    Toast.makeText(AddressService.this, address, Toast.LENGTH_LONG).show();
-                   showToast(address);
+                    showToast(address);
                     break;
 
                 case TelephonyManager.CALL_STATE_IDLE://电话闲置状态
                     if (mWM!=null&&view!=null){
-                    mWM.removeView(view);//windows中移除界面
+                        mWM.removeView(view);//windows中移除界面
                         view=null;
-                }
+                    }
                     break;
                 default:
                     break;
@@ -105,14 +109,14 @@ public class AddressService extends Service {
         super.onDestroy();
         tmService.listen(mylistener,PhoneStateListener.LISTEN_NONE);
 
-     unregisterReceiver(receiver);//注销广播
+        unregisterReceiver(receiver);//注销广播
 
 
     }
-/**
- * 自定义归属地的浮窗
- *
- */
+    /**
+     * 自定义归属地的浮窗
+     *
+     */
 
     private void showToast(String text){
         //使用windowManager可以在其他第三方APP中运用上弹出浮窗
@@ -132,15 +136,17 @@ public class AddressService extends Service {
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 
 
-//        view = new TextView(this);
         view=  View.inflate(this, R.layout.toast_address,null);
+
+        int[] bgs=new int[]{R.drawable.call_locate_white,R.drawable.call_locate_orange,R.drawable.call_locate_blue,
+                R.drawable.call_locate_gray,R.drawable.call_locate_green};
+        int address_style = mPref.getInt("address_style", 0);//读取默认保存的style
+
+        view.setBackgroundResource(bgs[address_style]);//根据存储的style样式更新背景
+
+
         TextView textView= (TextView) view.findViewById(R.id.tvNumber);
-
-
-
-
         textView.setText(text);
-//        view.setTextColor(Color.RED);
         mWM.addView(view, mParams);//将view添加到屏幕
     }
 
