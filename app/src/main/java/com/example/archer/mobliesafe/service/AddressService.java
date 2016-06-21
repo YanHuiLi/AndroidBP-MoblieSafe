@@ -10,10 +10,12 @@ import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.archer.mobliesafe.R;
 import com.example.archer.mobliesafe.db.dao.AddressDao;
 import com.example.archer.mobliesafe.utils.ToastUtils;
 
@@ -28,7 +30,7 @@ public class AddressService extends Service {
     private MyListener mylistener;
     private OutCallReceiver receiver;
     private WindowManager mWM;
-    private TextView view;
+    private View view;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -70,6 +72,7 @@ public class AddressService extends Service {
                 case TelephonyManager.CALL_STATE_IDLE://电话闲置状态
                     if (mWM!=null&&view!=null){
                     mWM.removeView(view);//windows中移除界面
+                        view=null;
                 }
                     break;
                 default:
@@ -129,9 +132,15 @@ public class AddressService extends Service {
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
 
 
-        view = new TextView(this);
-        view.setText(text);
-        view.setTextColor(Color.RED);
+//        view = new TextView(this);
+        view=  View.inflate(this, R.layout.toast_address,null);
+        TextView textView= (TextView) view.findViewById(R.id.tvNumber);
+
+
+
+
+        textView.setText(text);
+//        view.setTextColor(Color.RED);
         mWM.addView(view, mParams);//将view添加到屏幕
     }
 

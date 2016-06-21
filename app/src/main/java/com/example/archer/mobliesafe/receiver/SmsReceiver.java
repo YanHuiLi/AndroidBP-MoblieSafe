@@ -49,7 +49,7 @@ public class SmsReceiver  extends BroadcastReceiver{
             }else if ("#*lockscreen*#".equals(messageBody)){
                 System.out.println("锁屏");
             }else if ("#*wipedata*#".equals(messageBody)){
-                System.out.println("清楚数据");
+                System.out.println("清除数据");
             }
         }
     }
