@@ -80,6 +80,12 @@ public class DragViewActivity extends Activity {
                             ,winwidth/2+ivDrag.getWidth()/2
                             ,winheight/2+ivDrag.getHeight()/2);
 
+                    SharedPreferences.Editor edit=mPref.edit();
+                    edit.putInt("lastX",ivDrag.getLeft());
+                    edit.putInt("lastY",ivDrag.getTop());
+
+                    edit.commit();
+
 
                 }
             }

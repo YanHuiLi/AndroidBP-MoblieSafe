@@ -12,6 +12,7 @@ import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ public class AddressService extends Service {
     private WindowManager mWM;
     private View view;
     private SharedPreferences mPref;
+    private int startX,startY;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -124,17 +126,19 @@ public class AddressService extends Service {
         mWM = (WindowManager) this
                 .getSystemService(Context.WINDOW_SERVICE);
 
-        WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
+        final int Winwidth = mWM.getDefaultDisplay().getWidth();
+        final int Winheight = mWM.getDefaultDisplay().getHeight();
+        final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
 
         mParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         mParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
         mParams.format = PixelFormat.TRANSLUCENT;
 
-        mParams.type = WindowManager.LayoutParams.TYPE_TOAST;
+        mParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         mParams.setTitle("Toast");
         mParams.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+                | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+
 
         mParams.gravity= Gravity.LEFT+Gravity.TOP;//将中心位置设置成左上方，默认是居中
         int lastX = mPref.getInt("lastX", 0);
@@ -156,6 +160,67 @@ public class AddressService extends Service {
         TextView textView= (TextView) view.findViewById(R.id.tvNumber);
         textView.setText(text);
         mWM.addView(view, mParams);//将view添加到屏幕
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+
+
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+//                System.out.println("OnTouch");
+
+                switch (event.getAction()){
+
+                    case MotionEvent.ACTION_DOWN:
+                        startX = (int) event.getRawX();
+                        startY = (int) event.getRawY();
+                        break;
+
+                    case  MotionEvent.ACTION_MOVE:
+                        int endX=(int) event.getRawX();
+                        int endY= (int) event.getRawY();
+
+                        int dX=endX-startX;
+                        int dY=endY-startY;//计算移动偏移量
+
+                        //更新浮窗位置
+                        mParams.x+=dX;
+                        mParams.y+=dY;
+
+                        //防止坐标偏离屏幕
+                        if (mParams.x<0){
+                            mParams.x=0;
+                        }
+
+                        if (mParams.y<0){
+                            mParams.y=0;
+                        }
+                        if (mParams.x>Winwidth-view.getWidth()) {
+                            mParams.x=Winwidth-view.getWidth();
+
+                        }
+                        if (mParams.y>Winheight-view.getHeight()){
+                            mParams.y=Winheight-view.getHeight();
+                        }
+                        mWM.updateViewLayout(view,mParams);
+
+                        startX = (int) event.getRawX();
+                        startY = (int) event.getRawY();
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        //记录坐标点
+                        SharedPreferences.Editor edit=mPref.edit();
+                        edit.putInt("lastX",mParams.x);
+                        edit.putInt("lastY",mParams.y);
+                        edit.commit();
+                        break;
+
+                }
+                return true;
+            }
+        });
     }
 
 }
