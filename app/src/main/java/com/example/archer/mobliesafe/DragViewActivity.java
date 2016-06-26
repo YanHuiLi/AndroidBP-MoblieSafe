@@ -3,6 +3,7 @@ package com.example.archer.mobliesafe;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 修改归属地显示位置
@@ -23,9 +25,11 @@ public class DragViewActivity extends Activity {
     private int startY;
     private int startX;
     private SharedPreferences mPref;
+    long[] mHits = new long[2];// 数组长度表示要点击的次数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drag_view);
         mPref = getSharedPreferences("config", MODE_PRIVATE);
@@ -59,7 +63,27 @@ public class DragViewActivity extends Activity {
         layoutParams.leftMargin=lastX;//设置左边距
         layoutParams.topMargin=lastY;//设置top边距
 
-        ivDrag.setLayoutParams(layoutParams);
+        ivDrag.setLayoutParams(layoutParams);//重新设置位置
+
+        ivDrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+                mHits[mHits.length - 1] = SystemClock.uptimeMillis();// 开机后开始计算的时间
+                if (mHits[0] >= (SystemClock.uptimeMillis() - 500)) {
+
+                    //把图片居中
+
+                    ivDrag.layout(winwidth/2-ivDrag.getWidth()/2
+                            ,winheight/2-ivDrag.getHeight()/2
+                            ,winwidth/2+ivDrag.getWidth()/2
+                            ,winheight/2+ivDrag.getHeight()/2);
+
+
+                }
+            }
+        });
 
 
         //触摸监听
@@ -134,7 +158,7 @@ public class DragViewActivity extends Activity {
 
                 }
 
-                return true;
+                return false;//事件要往下传递，让onclick可以响应
             }
         });
 
