@@ -1,20 +1,15 @@
 package com.example.archer.mobliesafe;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,7 +23,6 @@ import com.example.archer.mobliesafe.adapter.MyBaseAdapter;
 import com.example.archer.mobliesafe.bean.BlackNumberInfo;
 import com.example.archer.mobliesafe.db.dao.BlackNumberDao;
 import com.example.archer.mobliesafe.utils.ToastUtils;
-import com.lidroid.xutils.db.sqlite.CursorUtils;
 
 import java.util.List;
 

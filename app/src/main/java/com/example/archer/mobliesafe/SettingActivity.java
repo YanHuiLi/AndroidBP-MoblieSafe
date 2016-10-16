@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.example.archer.mobliesafe.service.AddressService;
+import com.example.archer.mobliesafe.service.CallSafeMyService;
 import com.example.archer.mobliesafe.utils.ServiceStatusUtils;
 import com.example.archer.mobliesafe.view.SettingClickView;
 import com.example.archer.mobliesafe.view.SettingItemView;
@@ -21,6 +22,7 @@ public class SettingActivity extends Activity{
 
     private SettingItemView settingItemView;
     private SettingItemView sivAddress;
+    private SettingItemView siv_CallSafe;//黑名单
     private SettingClickView scvAddressStyle;//修改风格
     private  SettingClickView scvAddressLocation;
     private SharedPreferences mPref;
@@ -33,9 +35,42 @@ public class SettingActivity extends Activity{
         mPref = getSharedPreferences("config", MODE_PRIVATE);
 
         initUpdateView();
+        initBlackView();
         initAddressView();
         initAddressStyle();
         initAddressLocation();
+    }
+
+    //初始化黑名单
+    private void initBlackView() {
+
+        siv_CallSafe= (SettingItemView) findViewById(R.id.siv_CallSafe);
+        boolean autoUpdate = mPref.getBoolean("auto_update",true);
+
+        //注意代码摆放位置，否则会造成空指针异常。
+        //根据归属地服务是否运行来更新checkbox。
+        boolean serviceRunning = ServiceStatusUtils.siServiceRunning(this,"com.example.archer.mobliesafe.service.CallSafeMyService");
+
+        if (serviceRunning){
+            siv_CallSafe.setCheck(true);
+        }else {
+
+            siv_CallSafe.setCheck(false);
+        }
+
+        siv_CallSafe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (siv_CallSafe.isChecked()){
+
+                    siv_CallSafe.setCheck(false);
+                    stopService(new Intent(SettingActivity.this, CallSafeMyService.class));//停止归属地服务
+                }else {
+                    siv_CallSafe.setCheck(true);
+                    startService(new Intent(SettingActivity.this, CallSafeMyService.class));//开始归属地服务
+                }
+            }
+        });
     }
 
 

@@ -10,14 +10,22 @@
         android:gravity="center"
         android:textSize="20sp"
         android:text="添加黑名单"
-        android:layout_marginTop="16dp"/>
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:background="#66ff6600"/>
 
+
+    <!-- android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:background="#66ff6600"-->
     <EditText
         android:id="@+id/Abm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入黑名单"
-        android:layout_marginTop="16dp"/>
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

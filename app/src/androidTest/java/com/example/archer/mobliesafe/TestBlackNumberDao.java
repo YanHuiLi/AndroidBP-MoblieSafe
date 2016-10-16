@@ -26,13 +26,21 @@ public class TestBlackNumberDao extends AndroidTestCase{
         super.setUp();
     }
 
-    public void testAdd(){
-        BlackNumberDao dao = new BlackNumberDao(mContext);
-        Random random = new Random();
-        for (int i = 0; i <200; i++) {
-            Long number = 13300000000L +i;
-            dao.add(number +"",String.valueOf(random.nextInt(3) + 1));
-        }
+//    public void testAdd(){
+//        BlackNumberDao dao = new BlackNumberDao(mContext);
+//        Random random = new Random();
+//        for (int i = 0; i <200; i++) {
+//            Long number = 13300000000L +i;
+//            dao.add(number +"",String.valueOf(random.nextInt(3) + 1));
+//        }
+//    }
+//
+    public void testFindNumber(){
+                BlackNumberDao dao = new BlackNumberDao(mContext);
+        String number = dao.findNumber("456");
+        System.out.println(number);
+
+
     }
 
 //    //测试删除

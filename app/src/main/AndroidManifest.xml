@@ -24,6 +24,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.provider.Telephony.SMS_DELIVER" />
+    <uses-permission android:name="android.provider.Telephony.SMS_RECEIVED" />
 
     <!-- @style/Theme.AppCompat.Light -->
     <application
@@ -72,7 +74,12 @@
         <service android:name=".service.LocationService" />
         <service android:name=".service.AddressService" />
 
-        <activity android:name=".CallSafeActivity"></activity>
+        <activity android:name=".CallSafeActivity" />
+
+        <service
+            android:name=".service.CallSafeMyService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
