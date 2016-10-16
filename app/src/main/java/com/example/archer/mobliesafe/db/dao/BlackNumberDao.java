@@ -141,7 +141,8 @@ public class BlackNumberDao {
     public List<BlackNumberInfo> findPar(int pageNumber,int pageSize){
         SQLiteDatabase db = helper.getReadableDatabase();
         //分页查询语句
-        Cursor cursor = db.rawQuery("select number,mode from blacknumber limit ? offset ?",new String[]{String.valueOf(pageSize),String.valueOf(pageSize *pageNumber)});
+        Cursor cursor = db.rawQuery("select number,mode from blacknumber limit ? offset ?",
+                new String[]{String.valueOf(pageSize),String.valueOf(pageSize *pageNumber)});
       //新建一个集合返回数据
         ArrayList<BlackNumberInfo> blackNumberInfos = new ArrayList<>();
 
@@ -156,6 +157,35 @@ public class BlackNumberDao {
         db.close();
         return  blackNumberInfos;
     }
+
+
+    /**
+     * 分批加载数据
+     *
+     * @param startIndex  开始索引的位置
+     * @param maxCount     每一页展示的最大的条目
+     * @return
+     */
+    public List<BlackNumberInfo> findPar2(int startIndex,int maxCount){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        //分页查询语句
+        Cursor cursor = db.rawQuery("select number,mode from blacknumber limit ? offset ?", new String[]{String.valueOf(maxCount),
+                String.valueOf(startIndex)});
+        //新建一个集合返回数据
+        ArrayList<BlackNumberInfo> blackNumberInfos = new ArrayList<>();
+
+        while (cursor.moveToNext()){
+            BlackNumberInfo blackNumberInfo = new BlackNumberInfo();
+            blackNumberInfo.setMode(cursor.getString(1));
+            blackNumberInfo.setNumber(cursor.getString(0));
+            blackNumberInfos.add(blackNumberInfo);
+
+        }
+        cursor.close();
+        db.close();
+        return  blackNumberInfos;
+    }
+
 
 
     /**
