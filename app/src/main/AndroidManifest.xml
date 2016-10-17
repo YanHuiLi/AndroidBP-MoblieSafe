@@ -80,6 +80,8 @@
             android:name=".service.CallSafeMyService"
             android:enabled="true"
             android:exported="true" />
+
+        <activity android:name=".AppManageActivity"></activity>
     </application>
 
 </manifest>

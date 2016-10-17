@@ -67,6 +67,11 @@ public class HomeActivity extends AppCompatActivity{
                         startActivity(new Intent(HomeActivity.this,CallSafeActivity.class));
 
                         break;
+                    case 2:
+                        //通讯卫士
+                        startActivity(new Intent(HomeActivity.this,AppManageActivity.class));
+
+                        break;
 
                     case 7:
                         //高级工具开发
