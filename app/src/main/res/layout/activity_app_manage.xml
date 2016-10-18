@@ -19,19 +19,19 @@
 
         <TextView
             android:id="@+id/tv_rom"
-            android:textSize="18sp"
+            android:textSize="19sp"
             android:textColor="@color/black"
-            android:text="内存可用：xxxM"
+            android:text="内存可用:xxxM"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/tv_sd"
-            android:textSize="18sp"
+            android:textSize="19sp"
             android:textColor="@color/black"
             android:layout_weight="1"
-            android:text="SD卡可用：xxxM"
+            android:text="SD卡可用:xxxM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
