@@ -1,5 +1,6 @@
 package com.example.archer.mobliesafe;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.archer.mobliesafe.bean.AppInfo;
@@ -57,10 +59,12 @@ public class AppManageActivity extends AppCompatActivity implements View.OnClick
 
     private AppInfo checkAppInfo;
     private AppManageAdapter mAdapter;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         initUI();
         initData();
 
@@ -225,10 +229,14 @@ public class AppManageActivity extends AppCompatActivity implements View.OnClick
 
             mAdapter = new AppManageAdapter();
             list_view.setAdapter(mAdapter);
+            dialog.dismiss();
+
         }
     };
 
     private void initData() {
+
+        dialog.show();//dialog的使用
 
         //因为是从手机访问是一个耗时的操作，所以使用异步的做法
 
@@ -263,6 +271,9 @@ public class AppManageActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void initUI() {
+        dialog = new ProgressDialog(this);
+        dialog.setTitle("玩命加载中");
+
         setContentView(R.layout.activity_app_manage);
         com.lidroid.xutils.ViewUtils.inject(this);
 
