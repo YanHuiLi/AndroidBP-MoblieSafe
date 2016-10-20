@@ -35,10 +35,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
 
-    <include
-        android:id="@+id/list_view"
-        layout="@layout/list_view" />
+
+    </LinearLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <include
+            android:id="@+id/list_view"
+            layout="@layout/list_view" />
+        <TextView
+            android:id="@+id/tv_appNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="应用程序有多少个"
+            android:textSize="18sp"
+            android:textColor="#fff"
+            android:background="#ff888888"/>
+
+    </FrameLayout>
 
 </LinearLayout>
