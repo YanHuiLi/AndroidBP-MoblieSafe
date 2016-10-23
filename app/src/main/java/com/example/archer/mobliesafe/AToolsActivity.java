@@ -5,8 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.archer.mobliesafe.utils.SmsUtils;
+
 /**
  * 高级工具
+ *
+ *
  * Created by Archer on 2016/6/18.
  */
 public class AToolsActivity  extends Activity {
@@ -24,6 +28,14 @@ public class AToolsActivity  extends Activity {
      */
     public void numberAddressQuery(View view) {
 
-startActivity(new Intent(this,AddressActivity.class));
+        startActivity(new Intent(this,AddressActivity.class));
     }
+
+
+    //备份短信
+    public void backupSms(View view) {
+
+        boolean backup = SmsUtils.backup(AToolsActivity.this);
+    }
+
 }

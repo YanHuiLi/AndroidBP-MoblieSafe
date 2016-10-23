@@ -259,9 +259,6 @@ public class AppManageActivity extends AppCompatActivity implements View.OnClick
                 }
 //                Message obtain = Message.obtain();//拿到一个消息
 //                mHandler.sendMessage(obtain);//发送 消息
-
-
-
                 mHandler.sendEmptyMessage(0);
 
 

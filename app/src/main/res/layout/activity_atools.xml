@@ -21,4 +21,22 @@
         android:clickable="true"
         android:drawablePadding="5dp"
         android:drawableLeft="@android:drawable/ic_menu_camera"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="短信备份"
+        android:textSize="20sp"
+        android:background="@drawable/btn_light_green_selector"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:inputType="phone"
+        android:padding="10dp"
+        android:onClick="backupSms"
+        android:clickable="true"
+        android:drawablePadding="5dp"
+        android:drawableLeft="@android:drawable/ic_menu_manage"/>
+
+
 </LinearLayout>
