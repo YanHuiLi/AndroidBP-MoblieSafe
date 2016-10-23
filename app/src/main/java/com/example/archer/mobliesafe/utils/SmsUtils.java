@@ -10,10 +10,7 @@ import android.util.Xml;
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-
-import static android.R.attr.x;
 
 /**
  * Created by Archer on 2016/10/23.
@@ -31,6 +28,7 @@ import static android.R.attr.x;
 
 public class SmsUtils {
 
+    public static final int EXTERNAL_STORAGE_REQ_CODE = 10 ;
 
     public static  boolean  backup(Context context){
 
@@ -42,6 +40,8 @@ public class SmsUtils {
  *
  */
 
+        //注意动态获取权限。android 6.0 以后 我采取的做法是 从应用里面打开 存储 即可。
+
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
             //如果能进来说就明用户有SD卡
             ContentResolver resolver = context.getContentResolver();
@@ -51,10 +51,8 @@ public class SmsUtils {
 
 
             Cursor cursor = resolver.query(uri, new String[]{"address", "date", "type","body"}, null,null,null);
-
             //cursor是游标的意思
             assert cursor != null;
-
 
             //写文件
             try {
@@ -106,25 +104,27 @@ public class SmsUtils {
 
                 }
 
+                cursor.close();
 
-             xmlSerializer.endTag(null,"smss");
 
-
+                xmlSerializer.endTag(null,"smss");
                 xmlSerializer.endDocument();
+
+                outputStream.flush();
+                outputStream.close();
+
+                return true;
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
 
-
-
-
         }
 
         return  false;
-
-    }
-
+}
 
 
 

@@ -3,9 +3,11 @@ package com.example.archer.mobliesafe;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 
 import com.example.archer.mobliesafe.utils.SmsUtils;
+import com.example.archer.mobliesafe.utils.ToastUtils;
 
 /**
  * 高级工具
@@ -34,8 +36,27 @@ public class AToolsActivity  extends Activity {
 
     //备份短信
     public void backupSms(View view) {
+//如果短信太多容易引起线程阻塞，影响体验，所以应该把这个功能仍进子线程里面去
 
-        boolean backup = SmsUtils.backup(AToolsActivity.this);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean result = SmsUtils.backup(AToolsActivity.this);
+                if(result){
+                    Looper.prepare();
+                    ToastUtils.showToast(AToolsActivity.this,"备份成功");
+                         Looper.loop();
+                }else {
+                    Looper.prepare();
+                    ToastUtils.showToast(AToolsActivity.this,"备份失败");
+                    Looper.loop();
+                }
+            }
+        }).start();
+
+//        boolean result = SmsUtils.backup(AToolsActivity.this);
+
+
     }
 
 }
