@@ -10,6 +10,8 @@ import android.os.SystemClock;
 import android.util.Xml;
 import android.widget.ProgressBar;
 
+import com.example.archer.mobliesafe.AToolsActivity;
+
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
@@ -32,11 +34,22 @@ import static com.example.archer.mobliesafe.R.id.progressBar;
  *
  */
 
+/**
+ * 备份短信的接口
+ */
 public class SmsUtils {
+
+
+
+    public  interface   BackUpCallBackSms{
+        void before(int count);
+        void onBackUpSms(int progress);
+
+    }
 
 //    public static final int EXTERNAL_STORAGE_REQ_CODE = 10 ;
 
-    public static  boolean  backup(Context context, ProgressDialog progressDialog, ProgressBar progressBar){
+    public static  boolean  backup(Context context,BackUpCallBackSms callBack){
 
 /**
  * 1.先判断用户是否有SD卡
@@ -62,8 +75,10 @@ public class SmsUtils {
             int count = cursor.getCount();//获取有多少短信
 int progress=0;//进度条默认是0
 //            progressDialog.setMax(count);//设置PD的最大值
-progressDialog.setMax(count);
-            progressBar.setMax(count);
+//progressDialog.setMax(count);
+//            progressBar.setMax(count);
+callBack.before(count);
+
             //cursor是游标的意思
 
             //写文件
@@ -116,9 +131,9 @@ progressDialog.setMax(count);
 
                     progress++;//备份完一条短信以后，进度条++
 //                    progressDialog.setProgress(progress);
-                    progressDialog.setProgress(progress);
-                    progressBar.setProgress(progress);
-
+//                    progressDialog.setProgress(progress);
+//                    progressBar.setProgress(progress);
+callBack.onBackUpSms(progress);
 
                     SystemClock.sleep(1000);
                 }

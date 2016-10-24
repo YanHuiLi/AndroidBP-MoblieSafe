@@ -9,8 +9,10 @@ import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.widget.ProgressBar;
-
 import com.example.archer.mobliesafe.utils.SmsUtils;
+
+
+import com.example.archer.mobliesafe.utils.SmsUtils.BackUpCallBackSms;
 import com.example.archer.mobliesafe.utils.ToastUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -99,7 +101,20 @@ public class AToolsActivity  extends Activity {
             @Override
             public void run() {
 
-                boolean result = SmsUtils.backup(AToolsActivity.this,progressDialog,progressBar);
+                boolean result = SmsUtils.backup(AToolsActivity.this, new SmsUtils.BackUpCallBackSms() {
+                    @Override
+                    public void before(int count) {
+progressDialog.setMax(count);
+                        progressBar.setMax(count);
+                    }
+
+                    @Override
+                    public void onBackUpSms(int progress) {
+
+                        progressDialog.setProgress(progress);
+                        progressBar.setProgress(progress);
+                    }
+                });
                 if(result){
                     //土司只能放在主线程里面
                     //子线程要改变UI的话，必须调用looper.prepare(),和 looper.loop()方法。
