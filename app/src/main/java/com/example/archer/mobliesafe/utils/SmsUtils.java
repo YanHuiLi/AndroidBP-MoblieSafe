@@ -1,16 +1,22 @@
 package com.example.archer.mobliesafe.utils;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.util.Xml;
+import android.widget.ProgressBar;
 
 import org.xmlpull.v1.XmlSerializer;
 
 import java.io.File;
 import java.io.FileOutputStream;
+
+import static android.R.attr.x;
+import static com.example.archer.mobliesafe.R.id.progressBar;
 
 /**
  * Created by Archer on 2016/10/23.
@@ -28,9 +34,9 @@ import java.io.FileOutputStream;
 
 public class SmsUtils {
 
-    public static final int EXTERNAL_STORAGE_REQ_CODE = 10 ;
+//    public static final int EXTERNAL_STORAGE_REQ_CODE = 10 ;
 
-    public static  boolean  backup(Context context){
+    public static  boolean  backup(Context context, ProgressDialog progressDialog, ProgressBar progressBar){
 
 /**
  * 1.先判断用户是否有SD卡
@@ -51,8 +57,14 @@ public class SmsUtils {
 
 
             Cursor cursor = resolver.query(uri, new String[]{"address", "date", "type","body"}, null,null,null);
-            //cursor是游标的意思
+
             assert cursor != null;
+            int count = cursor.getCount();//获取有多少短信
+int progress=0;//进度条默认是0
+//            progressDialog.setMax(count);//设置PD的最大值
+progressDialog.setMax(count);
+            progressBar.setMax(count);
+            //cursor是游标的意思
 
             //写文件
             try {
@@ -69,7 +81,7 @@ public class SmsUtils {
                 xmlSerializer.startDocument("utf-8",true);//表示当前的xml是否是独立文件
 
                 xmlSerializer.startTag(null,"smss");//设置开始的节点
-
+                xmlSerializer.attribute(null,"size",String.valueOf(count));
                 while(cursor.moveToNext()){
                     System.out.println("============================");
                     System.out.println( "address="+cursor.getString(0));
@@ -102,6 +114,13 @@ public class SmsUtils {
                     xmlSerializer.endTag(null,"sms");
 
 
+                    progress++;//备份完一条短信以后，进度条++
+//                    progressDialog.setProgress(progress);
+                    progressDialog.setProgress(progress);
+                    progressBar.setProgress(progress);
+
+
+                    SystemClock.sleep(1000);
                 }
 
                 cursor.close();

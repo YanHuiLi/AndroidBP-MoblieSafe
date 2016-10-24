@@ -38,5 +38,10 @@
         android:drawablePadding="5dp"
         android:drawableLeft="@android:drawable/ic_menu_manage"/>
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?android:attr/progressBarStyleHorizontal"/>
 
 </LinearLayout>
