@@ -135,7 +135,7 @@ callBack.before(count);
 //                    progressBar.setProgress(progress);
 callBack.onBackUpSms(progress);
 
-                    SystemClock.sleep(1000);
+                    SystemClock.sleep(200);
                 }
 
                 cursor.close();
