@@ -44,6 +44,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 public class AToolsActivity  extends Activity {
 
     private static final int WRITE_EXTERNAL_STORAGE_CODE = 1;
+    private static final int READ_SMS = 2;
     private ProgressDialog progressDialog;
     @ViewInject(R.id.progressBar)
     private ProgressBar progressBar;
@@ -53,7 +54,7 @@ public class AToolsActivity  extends Activity {
 
         setContentView(R.layout.activity_atools);
         ViewUtils.inject(this);
-        requestPermission();
+//        requestPermission();
     }
 
     /**
@@ -75,6 +76,8 @@ public class AToolsActivity  extends Activity {
 
     //备份短信
     public void backupSms(View view) {
+        requestPermissionSms();
+        requestPermission();
 
         progressDialog = new ProgressDialog(AToolsActivity.this);
         progressDialog.setTitle("提示");
@@ -165,14 +168,14 @@ progressDialog.setMax(count);
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //申请相机权限
+                                //申请sd卡权限
                                 ActivityCompat.requestPermissions(AToolsActivity.this,
                                         new String[]{Manifest.permission.CAMERA}, WRITE_EXTERNAL_STORAGE_CODE);
                             }
                         })
                         .show();
             } else {
-                //申请相机权限
+                //申请SD卡权限
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_CODE);
             }
@@ -183,11 +186,56 @@ progressDialog.setMax(count);
         }
     }
 
+    private void requestPermissionSms() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            // 第一次请求权限时，用户如果拒绝，下一次请求shouldShowRequestPermissionRationale()返回true
+            // 向用户解释为什么需要这个权限
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+                new AlertDialog.Builder(this)
+                        .setMessage("申请读取短信的权限")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //申请sd卡权限
+                                ActivityCompat.requestPermissions(AToolsActivity.this,
+                                        new String[]{Manifest.permission.CAMERA}, READ_SMS);
+                            }
+                        })
+                        .show();
+            } else {
+                //申请SD卡权限
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_SMS}, READ_SMS);
+            }
+        } else {
+//            tvPermissionStatus.setTextColor(Color.GREEN);
+//            tvPermissionStatus.setText("相机权限已申请");
+            ToastUtils.showToast(AToolsActivity.this,"读取短信的权限已经申请");
+        }
+    }
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == WRITE_EXTERNAL_STORAGE_CODE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//        if (requestCode == WRITE_EXTERNAL_STORAGE_CODE) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+////                tvPermissionStatus.setTextColor(Color.GREEN);
+////                tvPermissionStatus.setText("相机权限已申请");
+//                ToastUtils.showToast(AToolsActivity.this,"读取SD卡权限已经申请");
+//            } else {
+//                //用户勾选了不再询问
+//                //提示用户手动打开权限
+//                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                    Toast.makeText(this, "读取SD卡权限已经申请", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+
+        switch (requestCode){
+            case WRITE_EXTERNAL_STORAGE_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //                tvPermissionStatus.setTextColor(Color.GREEN);
 //                tvPermissionStatus.setText("相机权限已申请");
                 ToastUtils.showToast(AToolsActivity.this,"读取SD卡权限已经申请");
@@ -198,9 +246,81 @@ progressDialog.setMax(count);
                     Toast.makeText(this, "读取SD卡权限已经申请", Toast.LENGTH_SHORT).show();
                 }
             }
+                break;
+
+            case READ_SMS:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                tvPermissionStatus.setTextColor(Color.GREEN);
+//                tvPermissionStatus.setText("相机权限已申请");
+                    ToastUtils.showToast(AToolsActivity.this,"读取短信权限已经申请");
+                } else {
+                    //用户勾选了不再询问
+                    //提示用户手动打开权限
+                    if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        Toast.makeText(this, "读取短信权限已经申请", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            default:
+                break;
         }
     }
+
+//    private void requestPermission1() {
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            // 第一次请求权限时，用户如果拒绝，下一次请求shouldShowRequestPermissionRationale()返回true
+//            // 向用户解释为什么需要这个权限
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+//                new AlertDialog.Builder(this)
+//                        .setMessage("申请读取SD卡的权限")
+//                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                //申请相机权限
+//                                ActivityCompat.requestPermissions(AToolsActivity.this,
+//                                        new String[]{Manifest.permission.CAMERA}, WRITE_EXTERNAL_STORAGE_CODE);
+//                            }
+//                        })
+//                        .show();
+//            } else {
+//                //申请相机权限
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_CODE);
+//            }
+//        } else {
+////            tvPermissionStatus.setTextColor(Color.GREEN);
+////            tvPermissionStatus.setText("相机权限已申请");
+//            ToastUtils.showToast(AToolsActivity.this,"读取SD卡权限已经申请");
+//        }
+//    }
+
+
+
+
+
+
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        if (requestCode == WRITE_EXTERNAL_STORAGE_CODE) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+////                tvPermissionStatus.setTextColor(Color.GREEN);
+////                tvPermissionStatus.setText("相机权限已申请");
+//                ToastUtils.showToast(AToolsActivity.this,"读取SD卡权限已经申请");
+//            } else {
+//                //用户勾选了不再询问
+//                //提示用户手动打开权限
+//                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//                    Toast.makeText(this, "读取SD卡权限已经申请", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
+
 }
+
 
 
 
