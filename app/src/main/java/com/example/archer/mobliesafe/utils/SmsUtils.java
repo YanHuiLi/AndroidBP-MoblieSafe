@@ -73,11 +73,11 @@ public class SmsUtils {
 
             assert cursor != null;
             int count = cursor.getCount();//获取有多少短信
-int progress=0;//进度条默认是0
+            int progress=0;//进度条默认是0
 //            progressDialog.setMax(count);//设置PD的最大值
 //progressDialog.setMax(count);
 //            progressBar.setMax(count);
-callBack.before(count);
+            callBack.before(count);
 
             //cursor是游标的意思
 
@@ -122,7 +122,10 @@ callBack.before(count);
 
 
                     xmlSerializer.startTag(null,"body");
-                    xmlSerializer.text(cursor.getString(3));
+                    /**
+                     * 加密种子密钥 加密的文本内容
+                     */
+                    xmlSerializer.text(Crypto.encrypt("123",cursor.getString(3)));
                     xmlSerializer.endTag(null,"body");
 
 
@@ -133,7 +136,7 @@ callBack.before(count);
 //                    progressDialog.setProgress(progress);
 //                    progressDialog.setProgress(progress);
 //                    progressBar.setProgress(progress);
-callBack.onBackUpSms(progress);
+                    callBack.onBackUpSms(progress);
 
                     SystemClock.sleep(200);
                 }
@@ -158,7 +161,7 @@ callBack.onBackUpSms(progress);
         }
 
         return  false;
-}
+    }
 
 
 

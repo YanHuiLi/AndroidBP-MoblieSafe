@@ -5,7 +5,21 @@
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
     android:id="@+id/rl_root"
-    android:background="@drawable/launcher_bg">
+    android:background="@drawable/kjhm">
+
+    <!--android:background="@drawable/launcher_bg"-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:text="杀毒软件"
+        android:textColor="#fff"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"/>
 
 
     <TextView
