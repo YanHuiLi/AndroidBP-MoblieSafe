@@ -1,8 +1,14 @@
 package com.example.archer.mobliesafe;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +21,7 @@ import com.example.archer.mobliesafe.utils.ToastUtils;
  * Created by Archer on 2016/6/5.
  */
 public class Setup3Activity extends BaseSetupActivity{
+    private static final int ReadContact = 1;
     private EditText etPhone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,7 @@ public class Setup3Activity extends BaseSetupActivity{
      */
 
     public void selectContact(View view) {
+        requestPermission();
 
         Intent intent=new Intent(this,ContactActivity.class);
         startActivityForResult(intent,0);
@@ -109,6 +117,51 @@ public class Setup3Activity extends BaseSetupActivity{
 //
 //    }
 
+    private void requestPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            // 第一次请求权限时，用户如果拒绝，下一次请求shouldShowRequestPermissionRationale()返回true
+            // 向用户解释为什么需要这个权限
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)) {
+                new AlertDialog.Builder(this)
+                        .setMessage("申请读取联系人的权限")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //申请相机权限
+                                ActivityCompat.requestPermissions(Setup3Activity.this,
+                                        new String[]{Manifest.permission.READ_CONTACTS}, ReadContact);
+                            }
+                        })
+                        .show();
+            } else {
+                //申请读取联系人权限
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CONTACTS}, ReadContact);
+            }
+        } else {
+//            tvPermissionStatus.setTextColor(Color.GREEN);
+//            tvPermissionStatus.setText("相机权限已申请");
+            ToastUtils.showToast(Setup3Activity.this,"读取联系人权限");
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == ReadContact) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                tvPermissionStatus.setTextColor(Color.GREEN);
+//                tvPermissionStatus.setText("相机权限已申请");
+                ToastUtils.showToast(Setup3Activity.this,"联系人权限已申请");
+            } else {
+                //用户勾选了不再询问
+                //提示用户手动打开权限
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    Toast.makeText(this, "读取联系人权限", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 
 }
