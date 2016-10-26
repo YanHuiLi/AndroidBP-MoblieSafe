@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.example.archer.mobliesafe.service.AddressService;
 import com.example.archer.mobliesafe.service.CallSafeMyService;
-import com.example.archer.mobliesafe.utils.ServiceStatusUtils;
+import com.example.archer.mobliesafe.utils.SystemInfoUtils;
 import com.example.archer.mobliesafe.view.SettingClickView;
 import com.example.archer.mobliesafe.view.SettingItemView;
 
@@ -49,7 +49,7 @@ public class SettingActivity extends Activity{
 
         //注意代码摆放位置，否则会造成空指针异常。
         //根据归属地服务是否运行来更新checkbox。
-        boolean serviceRunning = ServiceStatusUtils.siServiceRunning(this,"com.example.archer.mobliesafe.service.CallSafeMyService");
+        boolean serviceRunning = SystemInfoUtils.siServiceRunning(this,"com.example.archer.mobliesafe.service.CallSafeMyService");
 
         if (serviceRunning){
             siv_CallSafe.setCheck(true);
@@ -127,7 +127,7 @@ public class SettingActivity extends Activity{
 
         //注意代码摆放位置，否则会造成空指针异常。
         //根据归属地服务是否运行来更新checkbox。
-        boolean serviceRunning = ServiceStatusUtils.siServiceRunning(this,"com.example.archer.mobliesafe.service.AddressService");
+        boolean serviceRunning = SystemInfoUtils.siServiceRunning(this,"com.example.archer.mobliesafe.service.AddressService");
 
         if (serviceRunning){
             sivAddress.setCheck(true);

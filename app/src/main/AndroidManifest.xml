@@ -26,10 +26,10 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.provider.Telephony.SMS_DELIVER" />
     <uses-permission android:name="android.provider.Telephony.SMS_RECEIVED" />
-    <uses-permission android:name="android.permission.READ_SMS"/>
-    <uses-permission android:name="android.permission.WRITE_SMS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
 
     <!-- @style/Theme.AppCompat.Light -->
     <application
@@ -85,7 +85,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".AppManageActivity"></activity>
+        <activity android:name=".AppManageActivity" />
+        <activity android:name=".TaskManagerActivity"></activity>
     </application>
 
 </manifest>
