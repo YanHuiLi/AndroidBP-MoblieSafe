@@ -1,5 +1,6 @@
 package com.example.archer.mobliesafe;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,10 +15,14 @@ import com.example.archer.mobliesafe.utils.SystemInfoUtils;
 import com.example.archer.mobliesafe.view.SettingClickView;
 import com.example.archer.mobliesafe.view.SettingItemView;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
+
 /**
  * @fuction 设置中心
  * Created by Archer on 2016/6/3.
  */
+@RuntimePermissions
 public class SettingActivity extends Activity{
 
     private SettingItemView settingItemView;
@@ -33,7 +38,7 @@ public class SettingActivity extends Activity{
         setContentView(R.layout.activity_setting);
 
         mPref = getSharedPreferences("config", MODE_PRIVATE);
-
+        requestPermission();
         initUpdateView();
         initBlackView();
         initAddressView();
@@ -221,5 +226,21 @@ public class SettingActivity extends Activity{
             }
         });
 
+    }
+
+    private void  requestPermission(){
+        SettingActivityPermissionsDispatcher.AlertWindowWithCheck(this);
+
+    }
+
+    @NeedsPermission(Manifest.permission.SYSTEM_ALERT_WINDOW)
+    void AlertWindow() {
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        SettingActivityPermissionsDispatcher.onActivityResult(this, requestCode);
     }
 }

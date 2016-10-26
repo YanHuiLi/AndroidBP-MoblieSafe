@@ -46,6 +46,7 @@
         <include
             android:id="@+id/list_view"
             layout="@layout/list_view" />
+
         <TextView
             android:id="@+id/tv_appNumber"
             android:layout_width="match_parent"

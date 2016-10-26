@@ -27,9 +27,11 @@ public class Setup3Activity extends BaseSetupActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup3);
+        requestPermission();
         etPhone= (EditText) findViewById(R.id.et_phone);
         String safe_phone = mPref.getString("safe_phone", "");
         etPhone.setText(safe_phone);
+
     }
 
     @Override
@@ -62,7 +64,6 @@ public class Setup3Activity extends BaseSetupActivity{
      */
 
     public void selectContact(View view) {
-        requestPermission();
 
         Intent intent=new Intent(this,ContactActivity.class);
         startActivityForResult(intent,0);
