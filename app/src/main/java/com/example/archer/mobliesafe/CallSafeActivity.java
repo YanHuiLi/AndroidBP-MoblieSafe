@@ -32,6 +32,8 @@ import java.util.List;
 
 public class CallSafeActivity extends AppCompatActivity {
 
+
+
     private ListView list_view;
     private List<BlackNumberInfo> daoAll;
     private LinearLayout mLinearlayout;

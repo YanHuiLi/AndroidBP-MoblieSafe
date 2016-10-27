@@ -51,14 +51,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/tv_task_user_process_count"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="用户进程数"
-            android:textSize="15sp"
-            android:textColor="#fff"
-            android:background="#ff888888"/>
+        <!--<TextView-->
+            <!--android:id="@+id/tv_task_user_process_count"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="用户进程数"-->
+            <!--android:textSize="15sp"-->
+            <!--android:textColor="#fff"-->
+            <!--android:background="#ff888888"/>-->
 
 
     </FrameLayout>

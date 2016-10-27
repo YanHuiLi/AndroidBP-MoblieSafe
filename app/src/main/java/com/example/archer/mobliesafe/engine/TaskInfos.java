@@ -78,7 +78,6 @@ public class TaskInfos {
                 }else{
 //					/用户应用
                     taskInfo.setUserApp(true);
-
                 }
 
             } catch (PackageManager.NameNotFoundException e) {
@@ -91,8 +90,6 @@ public class TaskInfos {
 
             }
             taskInfos.add(taskInfo);
-
-
         }
 
 

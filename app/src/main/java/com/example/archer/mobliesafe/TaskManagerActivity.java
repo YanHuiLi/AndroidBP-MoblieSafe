@@ -1,17 +1,15 @@
 package com.example.archer.mobliesafe;
 
-import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,17 +19,8 @@ import com.example.archer.mobliesafe.utils.SystemInfoUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
-import com.example.archer.mobliesafe.utils.SystemInfoUtils.*;
-
-import static android.content.Context.ACTIVITY_SERVICE;
-import static com.example.archer.mobliesafe.R.id.iv_icon;
 
 public class TaskManagerActivity extends AppCompatActivity {
 
@@ -41,11 +30,15 @@ public class TaskManagerActivity extends AppCompatActivity {
     @ViewInject(R.id.tv_task_memory)
     private TextView tv_task_memory;
 
-    @ViewInject(R.id.tv_task_user_process_count)
-    private TextView tv_task_user_process_count;
+//    @ViewInject(R.id.tv_task_user_process_count)
+//    private TextView tv_task_user_process_count;
 
     private ListView  listView_process;
     private List<TaskInfo> taskInfos;
+    private ArrayList<TaskInfo> userTaskInfos;
+    private ArrayList<TaskInfo> systemTaskInfos;
+    private View view;
+    private ViewHolder holder;
 
 
     @Override
@@ -137,21 +130,74 @@ public class TaskManagerActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
+            if(position==0){//如果是position等于0的话，说明是第一个textView的展示
 
+                //新建一个特殊的展示的textView
+                TextView textView= new TextView(TaskManagerActivity.this);
+                textView.setTextColor(Color.WHITE);//字体会白色
+                textView.setTextSize(18);
+                textView.setBackgroundColor(Color.GRAY);//背景颜色为灰色
 
-            View view = View.inflate(TaskManagerActivity.this, R.layout.item_task_manager, null);
-            ViewHolder holder=new ViewHolder();
-            //初始化组件
-            holder.iv_icon  = (ImageView) view.findViewById(R.id.iv_task_icon);
-            holder.tv_ProcessName= (TextView) view.findViewById(R.id.tv_ProcessName);
-            holder.ck_clear= (CheckBox) view.findViewById(R.id.ck_process);
-            holder.tv_memory_size= (TextView) view.findViewById(R.id.tv_task_memory_size);
+                textView.setText("用户进程（"+userTaskInfos.size()+")个");
+                return  textView;
 
-            TaskInfo taskInfo = taskInfos.get(position);//得到的当前的bean对象
+            }else  if (position==userTaskInfos.size()+1){//第二个系统程序的textView
+
+                TextView textView=new TextView(TaskManagerActivity.this);
+                textView.setTextSize(18);
+                textView.setTextColor(Color.WHITE);
+                textView.setBackgroundColor(Color.GRAY);
+
+                textView.setText("系统进程("+systemTaskInfos.size()+")个");
+
+                return  textView;
+
+            }
+
+            TaskInfo taskInfo ;
+
+            if (position<userTaskInfos.size()+1){
+
+//                System.out.println("userapp的个数是多少"+userAppInfos.size());
+
+                taskInfo=userTaskInfos.get(position-1);
+
+            }else {
+                int location =userTaskInfos.size()+2;
+                taskInfo=systemTaskInfos.get(position-location);
+            }
+
+            View view=null;
+            ViewHolder hodler;
+
+            if (convertView!=null&&convertView instanceof LinearLayout){
+                view= convertView;
+                holder =(TaskManagerActivity.ViewHolder) convertView.getTag();
+            }else{
+
+                view = View.inflate(TaskManagerActivity.this, R.layout.item_task_manager, null);
+                holder = new ViewHolder();
+                //初始化组件
+                holder.iv_icon  = (ImageView) view.findViewById(R.id.iv_task_icon);
+                holder.tv_ProcessName= (TextView) view.findViewById(R.id.tv_ProcessName);
+                holder.ck_clear= (CheckBox) view.findViewById(R.id.ck_process);
+                holder.tv_memory_size= (TextView) view.findViewById(R.id.tv_task_memory_size);
+
+                view.setTag(holder);
+            }
+
+//            if (taskInfo.isUserApp()){
+//                holder.tv_apkLocation.setText("手机内存");
+//            }else {
+//                holder.tv_apkLocation.setText("SD卡");
+//
+//            }
+
+//            TaskInfo taskInfo = taskInfos.get(position);//得到的当前的bean对象
 
             holder.iv_icon.setImageDrawable(taskInfo.getIcon());
              holder.tv_ProcessName.setText(taskInfo.getAppName());
-            holder.tv_memory_size.setText(Formatter.formatFileSize(TaskManagerActivity.this,taskInfo.getMemorySize()));
+            holder.tv_memory_size.setText("内存占用"+Formatter.formatFileSize(TaskManagerActivity.this,taskInfo.getMemorySize()));
             return view;
         }
 
@@ -173,6 +219,17 @@ public class TaskManagerActivity extends AppCompatActivity {
       @Override
       public void run() {
           taskInfos = TaskInfos.getTaskInfos(TaskManagerActivity.this);
+          userTaskInfos = new ArrayList<>();
+          systemTaskInfos = new ArrayList<>();
+
+          //遍历整个集合
+          for (TaskInfo taskInfo : taskInfos) {
+              if (taskInfo.isUserApp()){
+                   userTaskInfos.add(taskInfo);
+              }else {
+                  systemTaskInfos.add(taskInfo);
+              }
+          }
 
 //          handler.sendEmpztyMessage(0);
 

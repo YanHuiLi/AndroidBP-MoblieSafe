@@ -8,14 +8,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.archer.mobliesafe.service.AddressService;
 import com.example.archer.mobliesafe.service.CallSafeMyService;
 import com.example.archer.mobliesafe.utils.SystemInfoUtils;
+import com.example.archer.mobliesafe.utils.ToastUtils;
 import com.example.archer.mobliesafe.view.SettingClickView;
 import com.example.archer.mobliesafe.view.SettingItemView;
 
 import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 /**
@@ -242,5 +248,33 @@ public class SettingActivity extends Activity{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         SettingActivityPermissionsDispatcher.onActivityResult(this, requestCode);
+    }
+
+    @OnShowRationale(Manifest.permission.SYSTEM_ALERT_WINDOW)
+    void ShowRationale(final PermissionRequest request) {
+        new AlertDialog.Builder(this)
+                .setMessage("请求读取在其他屏幕上显示的权限，否则无法完成悬浮框的功能")
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //再次执行请求
+                        request.proceed();
+                    }
+                })
+                .show();
+    }
+
+    @OnPermissionDenied(Manifest.permission.SYSTEM_ALERT_WINDOW)
+    void PermissonDenied() {
+
+        ToastUtils.showToast(SettingActivity.this,"此权限已经被禁止");
+
+    }
+
+    @OnNeverAskAgain(Manifest.permission.SYSTEM_ALERT_WINDOW)
+    void NeverAskAgain() {
+
+        ToastUtils.showToast(SettingActivity.this,"不再询问");
+
     }
 }
