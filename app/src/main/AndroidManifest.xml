@@ -87,7 +87,12 @@
 
         <activity android:name=".AppManageActivity" />
         <activity android:name=".TaskManagerActivity" />
-        <activity android:name=".TaskManagerActivitySetting"></activity>
+        <activity android:name=".TaskManagerActivitySetting" />
+
+        <service
+            android:name=".service.KillProcessService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

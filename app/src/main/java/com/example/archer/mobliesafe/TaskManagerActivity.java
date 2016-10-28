@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.archer.mobliesafe.bean.TaskInfo;
 import com.example.archer.mobliesafe.engine.TaskInfos;
+import com.example.archer.mobliesafe.utils.SharedPreferenceUtils;
 import com.example.archer.mobliesafe.utils.SystemInfoUtils;
 import com.example.archer.mobliesafe.utils.ToastUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -50,7 +51,7 @@ public class TaskManagerActivity extends AppCompatActivity {
     private int processCount;
     private long totalMem;
     private long avaliMem;
-    private SharedPreferences config;
+//    private SharedPreferences config;
     ;
 
 
@@ -60,7 +61,7 @@ public class TaskManagerActivity extends AppCompatActivity {
 
         //1.得到一个SP SP得主要用途在于数据量小得临时标记和保存
         //2.得到点击checkbox时候，保存再config里面得value
-        config = getSharedPreferences("config", 0);
+//        config = getSharedPreferences("config", 0);
 
 
 
@@ -116,6 +117,7 @@ public class TaskManagerActivity extends AppCompatActivity {
 //        System.out.println("所有的应用用多少"+size);
 
         processCount = SystemInfoUtils.getProcessCount(TaskManagerActivity.this);
+        tv_task_process_count.setTextSize(14);
         tv_task_process_count.setText("运行中的进程："+ processCount +" 个");
 
        //获取到剩余内存
@@ -128,7 +130,7 @@ public class TaskManagerActivity extends AppCompatActivity {
         totalMem = SystemInfoUtils.getTotalMemory(TaskManagerActivity.this);
         avaliMem = SystemInfoUtils.getAvaliMem(TaskManagerActivity.this);
 
-
+        tv_task_memory.setTextSize(14);
         tv_task_memory.setText("剩余/总内存："+Formatter.formatFileSize(this, avaliMem)
                 +"/"+Formatter.formatFileSize(this, totalMem));
 
@@ -263,9 +265,11 @@ public class TaskManagerActivity extends AppCompatActivity {
                 +"个，释放的内存总数"+Formatter.formatFileSize(TaskManagerActivity.this,avalMem));
 //表示当前还剩多少个进程
         processCount-=total;
+        tv_task_process_count.setTextSize(13);
         tv_task_process_count.setText("运行中的进程："+ processCount+" 个");
 
 //清理掉得内存应该加回去
+        tv_task_memory.setTextSize(13);
         tv_task_memory.setText("剩余/总内存："+Formatter.formatFileSize(this,avaliMem+avalMem)
                 +"/"+Formatter.formatFileSize(this, totalMem));
         taskManagerAdapter.notifyDataSetChanged();
@@ -293,7 +297,9 @@ public class TaskManagerActivity extends AppCompatActivity {
         public int getCount() {
 
             //根据checkbox拿到标记
-            boolean result = config.getBoolean("is_system_process", false);//默认为false
+//            boolean result = config.getBoolean("is_system_process", false);//默认为false
+
+            boolean  result= SharedPreferenceUtils.getBoolean(TaskManagerActivity.this, "is_system_process", false);
 
             if (result){
 
@@ -342,7 +348,7 @@ public class TaskManagerActivity extends AppCompatActivity {
                 //新建一个特殊的展示的textView
                 TextView textView= new TextView(TaskManagerActivity.this);
                 textView.setTextColor(Color.WHITE);//字体会白色
-                textView.setTextSize(18);
+                textView.setTextSize(13);
                 textView.setBackgroundColor(Color.GRAY);//背景颜色为灰色
 
                 textView.setText("用户进程（"+userTaskInfos.size()+")个");
@@ -351,7 +357,7 @@ public class TaskManagerActivity extends AppCompatActivity {
             }else  if (position==userTaskInfos.size()+1){//第二个系统程序的textView
 
                 TextView textView=new TextView(TaskManagerActivity.this);
-                textView.setTextSize(18);
+                textView.setTextSize(13);
                 textView.setTextColor(Color.WHITE);
                 textView.setBackgroundColor(Color.GRAY);
 
