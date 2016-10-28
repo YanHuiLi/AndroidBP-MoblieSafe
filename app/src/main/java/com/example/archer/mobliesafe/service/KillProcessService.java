@@ -3,6 +3,7 @@ package com.example.archer.mobliesafe.service;
 import android.app.ActivityManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -14,6 +15,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class KillProcessService extends Service {
+
+    private LockScreenReceiver lockScreenReceiver;
+
     public KillProcessService() {
     }
 
@@ -46,7 +50,7 @@ public class KillProcessService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        LockScreenReceiver lockScreenReceiver = new LockScreenReceiver();
+        lockScreenReceiver = new LockScreenReceiver();
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);//intentFilter过滤器
 
         registerReceiver(lockScreenReceiver,intentFilter);//注册一个锁屏得广播
@@ -73,5 +77,9 @@ public class KillProcessService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        //当应用程序退出得时候，反注册广播
+        unregisterReceiver(lockScreenReceiver);
+        lockScreenReceiver=null;
     }
 }

@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/tv_task_process_count"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textColor="@color/black"
             android:text="运行中的进程"
             android:layout_weight="1"
@@ -32,7 +32,7 @@
 
         <TextView
             android:id="@+id/tv_task_memory"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textColor="@color/black"
             android:layout_weight="1"
             android:text="剩余/总内存"

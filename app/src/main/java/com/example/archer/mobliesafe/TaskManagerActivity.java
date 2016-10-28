@@ -28,6 +28,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class TaskManagerActivity extends AppCompatActivity {
@@ -145,6 +146,10 @@ public class TaskManagerActivity extends AppCompatActivity {
                 if (itemAtPosition!=null&&itemAtPosition instanceof TaskInfo){
 
                      TaskInfo  taskInfo= (TaskInfo) itemAtPosition;
+
+                    if (taskInfo.getPackageName().equals(getPackageName())){
+                        return;
+                    }
 
                     //判断是否被勾选上
                     /**
@@ -381,10 +386,13 @@ public class TaskManagerActivity extends AppCompatActivity {
             }
 
             View view=null;
-            ViewHolder hodler;
+//            ViewHolder hodler;
 
             if (convertView!=null&&convertView instanceof LinearLayout){
+
+
                 view= convertView;
+
                 holder =(TaskManagerActivity.ViewHolder) convertView.getTag();
             }else{
 
@@ -413,10 +421,23 @@ public class TaskManagerActivity extends AppCompatActivity {
             holder.tv_memory_size.setText("内存占用"+Formatter.formatFileSize(TaskManagerActivity.this,taskInfo.getMemorySize()));
 
 
+
             if (taskInfo.isChecked()){
                 holder.ck_clear.setChecked(true);
             }else{
                 holder.ck_clear.setChecked(false);
+
+            }
+            //判断当前展示得item是不是自己得程序
+            //如果是就把checkbox隐藏起来
+            if (taskInfo.getPackageName().equals(getPackageName())){
+                //优先考虑invisible。
+                //gone不占位置，会影响应用性能，系统会重绘
+                //INVISIBLE 占位置的。
+                holder.ck_clear.setVisibility(View.INVISIBLE);
+            }else {
+                     //显示checkbox
+                holder.ck_clear.setVisibility(View.VISIBLE);
 
             }
 
