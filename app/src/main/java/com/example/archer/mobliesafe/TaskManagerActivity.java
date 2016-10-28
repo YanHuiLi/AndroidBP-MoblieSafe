@@ -1,6 +1,8 @@
 package com.example.archer.mobliesafe;
 
 import android.app.ActivityManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -48,15 +50,32 @@ public class TaskManagerActivity extends AppCompatActivity {
     private int processCount;
     private long totalMem;
     private long avaliMem;
+    private SharedPreferences config;
     ;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //1.得到一个SP SP得主要用途在于数据量小得临时标记和保存
+        //2.得到点击checkbox时候，保存再config里面得value
+        config = getSharedPreferences("config", 0);
+
+
+
         initUI();
         initData();
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (taskManagerAdapter!=null){
+            taskManagerAdapter.notifyDataSetChanged();
+        }
 
     }
 
@@ -252,6 +271,14 @@ public class TaskManagerActivity extends AppCompatActivity {
         taskManagerAdapter.notifyDataSetChanged();
     }
 
+    //点击进程设置按钮
+
+    public void TaskSetting(View view) {
+
+        //点击跳转到进程设置管理界面
+        startActivity(new Intent(TaskManagerActivity.this,TaskManagerActivitySetting.class));
+    }
+
 //    private Handler handler=new Handler(){
 //        @Override
 //        public void handleMessage(Message msg) {
@@ -264,7 +291,19 @@ public class TaskManagerActivity extends AppCompatActivity {
     private class TaskManagerAdapter  extends BaseAdapter{
         @Override
         public int getCount() {
-            return taskInfos.size();
+
+            //根据checkbox拿到标记
+            boolean result = config.getBoolean("is_system_process", false);//默认为false
+
+            if (result){
+
+                return taskInfos.size()+2;
+
+            }else {
+                return userTaskInfos.size()+1;
+            }
+
+//            userTaskInfos.size()+1+systemTaskInfos+1
         }
 
         @Override

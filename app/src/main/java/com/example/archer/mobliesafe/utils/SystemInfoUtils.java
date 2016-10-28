@@ -50,20 +50,15 @@ public class SystemInfoUtils {
      */
     public static int  getProcessCount(Context context){
         ActivityManager MActivityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-
         List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = MActivityManager.getRunningAppProcesses();//得到当前的进程数
-
         return runningAppProcesses.size();
 
     }
 
     public static long  getAvaliMem(Context context){
         ActivityManager MActivityManager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
-
-
         ActivityManager.MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
         MActivityManager.getMemoryInfo(memoryInfo);//获取到内存的基本信息
-
         return memoryInfo.availMem;
 
     }

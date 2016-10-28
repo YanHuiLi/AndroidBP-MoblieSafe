@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.archer.mobliesafe">
 
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES"/>
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -30,7 +30,6 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
 
     <!-- @style/Theme.AppCompat.Light -->
     <application
@@ -87,7 +86,8 @@
             android:exported="true" />
 
         <activity android:name=".AppManageActivity" />
-        <activity android:name=".TaskManagerActivity"></activity>
+        <activity android:name=".TaskManagerActivity" />
+        <activity android:name=".TaskManagerActivitySetting"></activity>
     </application>
 
 </manifest>
