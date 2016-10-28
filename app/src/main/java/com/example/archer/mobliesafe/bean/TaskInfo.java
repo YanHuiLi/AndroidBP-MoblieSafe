@@ -9,6 +9,21 @@ import android.graphics.drawable.Drawable;
 public class TaskInfo {
 
 
+    /**
+     * 判断当前的item条目是否被勾上
+     * @return true为勾上了
+     */
+
+    private boolean isChecked ;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
     public Drawable getIcon() {
         return icon;
     }

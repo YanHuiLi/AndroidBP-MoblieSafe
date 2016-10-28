@@ -26,6 +26,10 @@ public class TaskInfos {
 
     /**
      * 获取到所有的进程信息
+     *
+     *processName 进程的名字即是包的名字  com.example.....
+     *
+     * getLabel 得到的标签就是APP的名字 比如 mobilesafe
      * @return
      */
 
