@@ -1,26 +1,22 @@
 package com.example.archer.mobliesafe;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -110,6 +106,10 @@ public class SplashActivity extends AppCompatActivity {
         final SharedPreferences mPref = getSharedPreferences("config", MODE_PRIVATE);
 
         copyDB("address.db");//拷贝归属地查询数据库
+
+        copyDB("antivirus.db");//拷贝病毒数据库
+
+
         //判断是否要自动更新
         boolean autoUpdate =mPref.getBoolean("auto_update",true);
         if (autoUpdate){
@@ -198,9 +198,12 @@ public class SplashActivity extends AppCompatActivity {
                      * 5.android权限记得添加
                      * 6.若使用真机调试，保证PC和真机在同一局域网，并关闭防火墙
                      * 7.当重启电脑的时候，记得更改IP地址，部属到tomcat和java代码中的
+                     *
+                     * 10.0.2.2
                      */
 //                    URL url = new URL("http://192.168.191.3:8080/update.json");
-                    URL url = new URL("http://169.254.163.216:8080/update.json");
+//                    URL url = new URL("http://169.254.163.216:8080/update.json");
+                    URL url = new URL("http://10.0.2.2:8080/update.json");
 //                    URL url = new URL("http://192.168.1.201:8080/update.json");
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");// 设置请求方法
@@ -357,7 +360,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     System.out.println("下载成功");
 
-                    //跳转到系统下载页面
+                    //跳转到系统安装页面
 
                     Intent intent=new Intent(Intent.ACTION_VIEW);
                     intent.addCategory(Intent.CATEGORY_DEFAULT);

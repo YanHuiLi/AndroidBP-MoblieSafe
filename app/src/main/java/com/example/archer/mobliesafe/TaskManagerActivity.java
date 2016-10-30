@@ -2,8 +2,6 @@ package com.example.archer.mobliesafe;
 
 import android.app.ActivityManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,15 +24,21 @@ import com.example.archer.mobliesafe.utils.ToastUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 public class TaskManagerActivity extends AppCompatActivity {
 
+
+
+//    @ViewInject(R.id.tv_task_process_count)
+//    private TextView tv_task_process_count;
+
     @ViewInject(R.id.tv_task_process_count)
-    private TextView tv_task_process_count;
+    private TextView tv_task_process_count;;
 
     @ViewInject(R.id.tv_task_memory)
     private TextView tv_task_memory;

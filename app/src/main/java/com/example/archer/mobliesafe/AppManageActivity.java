@@ -11,7 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Formatter;
-import android.util.Log;
+
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,13 +29,17 @@ import android.widget.TextView;
 
 import com.example.archer.mobliesafe.bean.AppInfo;
 import com.example.archer.mobliesafe.engine.AppInfos;
-import com.lidroid.xutils.ViewUtils;
+
+
+
 import com.lidroid.xutils.view.annotation.ViewInject;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AppManageActivity extends AppCompatActivity implements View.OnClickListener {
+
 
     @ViewInject(R.id.list_view)
     private ListView list_view;

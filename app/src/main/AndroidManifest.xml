@@ -92,7 +92,9 @@
         <service
             android:name=".service.KillProcessService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".AntivirusActivity"></activity>
     </application>
 
 </manifest>
