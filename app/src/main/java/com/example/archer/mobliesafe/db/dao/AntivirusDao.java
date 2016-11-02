@@ -1,5 +1,6 @@
 package com.example.archer.mobliesafe.db.dao;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -20,15 +21,39 @@ public class AntivirusDao {
 
         SQLiteDatabase database = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READONLY);
 
-            String desc = null;
+        String desc = null;
 
         Cursor cursor = database.rawQuery("select desc from datable where md5 = ?", new String[]{md5});//查询当前传过来的md5是否在病毒数据库里面
-             if (cursor.moveToNext()){
-                desc = cursor.getString(0);
-             }
-cursor.close();
+        if (cursor.moveToNext()){
+            desc = cursor.getString(0);
+        }
+        cursor.close();
         return  desc;
 
+    }
+
+
+    /**
+     * 添加病毒数据库
+     * @param md5  特征码
+     * @param desc  描述信息
+     */
+    public  static  void addVirus(String md5,String desc){
+
+        SQLiteDatabase database = SQLiteDatabase.openDatabase(PATH, null, SQLiteDatabase.OPEN_READWRITE);
+
+
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("md5",md5);
+        contentValues.put("desc",desc);
+        contentValues.put("type",6);
+        contentValues.put("name","this is my virus");
+
+
+        database.insert("datable",null, contentValues);
+
+
+        database.close();
     }
 
 

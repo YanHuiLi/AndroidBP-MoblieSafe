@@ -18,11 +18,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.archer.mobliesafe.bean.VirusInfo;
+import com.example.archer.mobliesafe.db.dao.AntivirusDao;
+import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 
+import org.apache.http.HttpConnection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,7 +39,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+
+import static android.R.id.message;
 
 /**
  * Xutils框架的使用
@@ -49,6 +57,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final int CODE_NET_ERROR =2 ;
     private static final int CODE_JSON_ERROR =3 ;
     private static final int CODE_ENTER_HOME=4;//进入主页面
+    private static final int VIRUS = 5;
 
     private TextView tvPrograss;
 
@@ -61,7 +70,9 @@ public class SplashActivity extends AppCompatActivity {
     private Handler mhandler= new Handler(){
         @Override
         public void handleMessage(Message msg) {
+
             switch(msg.what){
+
                 case CODE_UPDATE_DIAOG:
                     showUpdateDailog();
                     break;
@@ -87,6 +98,7 @@ public class SplashActivity extends AppCompatActivity {
         }
     };
     private RelativeLayout rlRoot;
+    private AntivirusDao antivirusDao;
 
 
     @Override
@@ -108,6 +120,8 @@ public class SplashActivity extends AppCompatActivity {
         copyDB("address.db");//拷贝归属地查询数据库
 
         copyDB("antivirus.db");//拷贝病毒数据库
+        updateVirus();
+
 
 
         //判断是否要自动更新
@@ -126,6 +140,100 @@ public class SplashActivity extends AppCompatActivity {
         AlphaAnimation animation=new AlphaAnimation(0.3f,1f);
         animation.setDuration(2000);
         rlRoot.startAnimation(animation);
+    }
+
+    //更新病毒数据库
+    private void updateVirus() {
+
+        antivirusDao = new AntivirusDao();
+        //用handler发消息
+
+
+         new  Thread(){
+
+             @Override
+             public void run() {
+
+                 Message message=Message.obtain();
+
+                 HttpURLConnection httpUrlConnection=null;
+
+                 try {
+                     URL url =new URL("http://172.24.23.13:8080/update1.json");
+
+                     httpUrlConnection= (HttpURLConnection) url.openConnection();
+
+                     httpUrlConnection.setRequestMethod("GET");
+                      httpUrlConnection.setConnectTimeout(2000);
+                     httpUrlConnection.setReadTimeout(2000);
+                       httpUrlConnection.connect();
+                     int responseCode = httpUrlConnection.getResponseCode();// 获取响应码
+                     if (responseCode == 200) {
+                         InputStream inputStream = httpUrlConnection.getInputStream();
+                         BufferedReader reader=new BufferedReader(new InputStreamReader(inputStream));
+                         StringBuilder result=new StringBuilder();
+                         String line;
+                         while((line=reader.readLine())!=null){
+                             result.append(line);
+
+                         }
+                         System.out.println(result);
+
+                         JSONObject jsonObject = new JSONObject(String.valueOf(result));
+                         Gson gson = new Gson();
+                         VirusInfo virusInfo = gson.fromJson(String.valueOf(result), VirusInfo.class);
+
+                         AntivirusDao.addVirus(virusInfo.md5,virusInfo.desc);
+                     }
+
+
+                 } catch (MalformedURLException e) {
+                     e.printStackTrace();
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 } catch (JSONException e) {
+                     e.printStackTrace();
+                 }
+
+                 message.what=VIRUS;
+                 mhandler.sendMessage(message);
+                 if (httpUrlConnection!=null){
+                     httpUrlConnection.disconnect();
+                 }
+
+             }
+         }.start();
+
+//        HttpUtils httpUtils = new HttpUtils();
+//
+//        String url="http://172.24.23.13:8080/update1.json";
+//        httpUtils.send(HttpRequest.HttpMethod.GET, url, new RequestCallBack<String>() {
+//            @Override
+//            public void onSuccess(ResponseInfo<String> responseInfo) {
+//
+//                System.out.println(responseInfo.result);
+//
+//                try {
+//                    JSONObject jsonObject = new JSONObject(responseInfo.result);
+//                    String md5 = jsonObject.getString("md5");
+//                    String desc = jsonObject.getString("desc");
+//
+//                    antivirusDao.addVirus(md5,desc);
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(HttpException e, String s) {
+//                System.out.println(e);
+//
+//
+//            }
+//        });
+
+
     }
 
     //获取版本名称
@@ -203,7 +311,7 @@ public class SplashActivity extends AppCompatActivity {
                      */
 //                    URL url = new URL("http://192.168.191.3:8080/update.json");
 //                    URL url = new URL("http://169.254.163.216:8080/update.json");
-                    URL url = new URL("http://10.0.2.2:8080/update.json");
+                    URL url = new URL("http://172.24.23.13:8080/update.json");
 //                    URL url = new URL("http://192.168.1.201:8080/update.json");
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");// 设置请求方法

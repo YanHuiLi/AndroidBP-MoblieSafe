@@ -3,12 +3,11 @@ package com.example.archer.mobliesafe;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -24,8 +23,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
-import static com.example.archer.mobliesafe.R.id.ll_content;
 
 public class AntivirusActivity extends AppCompatActivity {
 
@@ -89,8 +86,7 @@ public class AntivirusActivity extends AppCompatActivity {
 
                         child.setTextColor(Color.BLACK);
 //					// 为false表示没有病毒
-                        child.setText(scanInfo.appName + "扫描安全");
-
+                        child.setText(scanInfo.appName + "------>扫描安全");
 
                     }
 
@@ -159,13 +155,18 @@ public class AntivirusActivity extends AppCompatActivity {
                     ScanInfo scanInfo = new ScanInfo();
 
                     // 获取到当前手机上面的app的名字
-//                    String appName = packageInfo.applicationInfo.loadLabel(
-//                            packageManager).toString();
-//
-//                    scanInfo.appName = appName;
-
-                    scanInfo.appName =packageInfo.applicationInfo.loadLabel(
+                    String appName = packageInfo.applicationInfo.loadLabel(
                             packageManager).toString();
+
+                    scanInfo.appName = appName;
+
+                    /**
+                     * 如果写成 scanInfo.appName =packageInfo.applicationInfo.loadLabel(
+                     packageManager).toString();这种形式 会报空指针异常。
+
+                     */
+
+
 
                     scanInfo.packageName = packageInfo.applicationInfo.packageName;
 
@@ -179,7 +180,7 @@ public class AntivirusActivity extends AppCompatActivity {
 
                     System.out.println("-------------------------");
 
-                    System.out.println(scanInfo.appName);
+                    System.out.println(appName);
 
                     System.out.println(md5);
 
@@ -188,14 +189,17 @@ public class AntivirusActivity extends AppCompatActivity {
 //					03-06 07:37:32.505: I/System.out(23660): 51dc6ba54cbfbcff299eb72e79e03668
 
 //					["md5":"51dc6ba54cbfbcff299eb72e79e03668","desc":"蝗虫病毒赶快卸载","desc":"蝗虫病毒赶快卸载","desc":"蝗虫病毒赶快卸载"]
-
+//                    b2d53b898d472160347af79d06c723d8  模拟一个病毒
 
 //					B7DA3864FD19C0B2390C9719E812E649
                     // 如果当前的描述信息等于null说明没有病毒
                     scanInfo.desc = desc != null;
+
+
+
                     progress++;
 
-                    SystemClock.sleep(500);
+                    SystemClock.sleep(100);
 
                     pb_Antivirus.setProgress(progress);
 

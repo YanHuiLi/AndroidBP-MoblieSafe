@@ -94,7 +94,8 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".AntivirusActivity"></activity>
+        <activity android:name=".AntivirusActivity" />
+        <activity android:name=".AppLockActivity"/>
     </application>
 
 </manifest>

@@ -221,6 +221,13 @@ public class AToolsActivity  extends Activity {
 
     }
 
+    public void LockApp(View view) {
+
+          startActivity(new Intent(AToolsActivity.this,AppLockActivity.class));
+
+
+    }
+
 
 //    private void requestPermission(){
 //        String[] permission ={ Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_SMS};

@@ -31,17 +31,32 @@
         android:background="@drawable/btn_light_green_selector"
         android:textColor="@color/black"
         android:gravity="center_vertical"
-        android:inputType="phone"
         android:padding="10dp"
         android:onClick="backupSms"
         android:clickable="true"
         android:drawablePadding="5dp"
-        android:drawableLeft="@android:drawable/ic_menu_manage"/>
+        android:drawableLeft="@android:drawable/ic_menu_save"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="?android:attr/progressBarStyleHorizontal"/>
+
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="应用锁"
+        android:textSize="20sp"
+        android:background="@drawable/btn_light_green_selector"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:onClick="LockApp"
+        android:clickable="true"
+        android:drawablePadding="5dp"
+        android:drawableLeft="@android:drawable/ic_menu_add"/>
 
 </LinearLayout>
