@@ -19,6 +19,16 @@
         archer:desc_off="自动更新已经关闭"
         />
 
+    <!--看萌狗-->
+    <com.example.archer.mobliesafe.view.SettingItemView
+        android:id="@+id/siv_watch_dog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        archer:SetItemTitle="看门狗设置"
+        archer:desc_on="看门狗已经开启"
+        archer:desc_off="看门狗已经关闭"
+        />
+
     <com.example.archer.mobliesafe.view.SettingItemView
         android:id="@+id/siv_address"
         android:layout_width="match_parent"

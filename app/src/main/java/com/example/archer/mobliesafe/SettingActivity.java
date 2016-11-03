@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.archer.mobliesafe.service.AddressService;
 import com.example.archer.mobliesafe.service.CallSafeMyService;
+import com.example.archer.mobliesafe.service.WatchDogService;
 import com.example.archer.mobliesafe.utils.SystemInfoUtils;
 import com.example.archer.mobliesafe.utils.ToastUtils;
 import com.example.archer.mobliesafe.view.SettingClickView;
@@ -38,6 +39,8 @@ public class SettingActivity extends Activity{
     private  SettingClickView scvAddressLocation;
     private SharedPreferences mPref;
 
+    private  SettingItemView siv_watch_dog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,7 @@ public class SettingActivity extends Activity{
         initAddressView();
         initAddressStyle();
         initAddressLocation();
+        initWatchDog();
     }
 
     //初始化黑名单
@@ -79,6 +83,39 @@ public class SettingActivity extends Activity{
                 }else {
                     siv_CallSafe.setCheck(true);
                     startService(new Intent(SettingActivity.this, CallSafeMyService.class));//开始归属地服务
+                }
+            }
+        });
+    }
+
+
+    //初始化看门狗
+    private void initWatchDog() {
+
+        siv_watch_dog= (SettingItemView) findViewById(R.id.siv_watch_dog);
+        boolean autoUpdate = mPref.getBoolean("auto_update",true);
+
+        //注意代码摆放位置，否则会造成空指针异常。
+        //根据归属地服务是否运行来更新checkbox。
+        boolean serviceRunning = SystemInfoUtils.siServiceRunning(this,"com.example.archer.mobliesafe.service.CallSafeMyService");
+
+        if (serviceRunning){
+            siv_watch_dog.setCheck(true);
+        }else {
+
+            siv_watch_dog.setCheck(false);
+        }
+
+        siv_watch_dog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (siv_watch_dog.isChecked()){
+
+                    siv_watch_dog.setCheck(false);
+                    stopService(new Intent(SettingActivity.this, WatchDogService.class));//停止归属地服务
+                }else {
+                    siv_watch_dog.setCheck(true);
+                    startService(new Intent(SettingActivity.this, WatchDogService.class));//开始归属地服务
                 }
             }
         });
