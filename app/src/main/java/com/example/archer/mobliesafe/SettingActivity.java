@@ -97,10 +97,11 @@ public class SettingActivity extends Activity{
 
         //注意代码摆放位置，否则会造成空指针异常。
         //根据归属地服务是否运行来更新checkbox。
-        boolean serviceRunning = SystemInfoUtils.siServiceRunning(this,"com.example.archer.mobliesafe.service.CallSafeMyService");
+        boolean serviceRunning = SystemInfoUtils.siServiceRunning(this,"com.example.archer.mobliesafe.service.WatchDogService");
 
         if (serviceRunning){
             siv_watch_dog.setCheck(true);
+
         }else {
 
             siv_watch_dog.setCheck(false);
@@ -113,9 +114,13 @@ public class SettingActivity extends Activity{
 
                     siv_watch_dog.setCheck(false);
                     stopService(new Intent(SettingActivity.this, WatchDogService.class));//停止归属地服务
+//                    mPref.edit().putBoolean("auto_update", false).commit();
+
                 }else {
                     siv_watch_dog.setCheck(true);
                     startService(new Intent(SettingActivity.this, WatchDogService.class));//开始归属地服务
+//                    mPref.edit().putBoolean("auto_update", true).commit();
+
                 }
             }
         });

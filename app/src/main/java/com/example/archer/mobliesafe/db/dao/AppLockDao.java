@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 程序锁的数据库
  *
@@ -70,5 +73,21 @@ public class AppLockDao {
         db.close();
         return result;
 
+    }
+
+    /**
+     * 查询全部的锁定的包名
+     * @return
+     */
+    public List<String> findAll(){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.query("appLockInfo", new String[]{"packagename"}, null, null, null, null, null);
+        List<String> packnames = new ArrayList<String>();
+        while(cursor.moveToNext()){
+            packnames.add(cursor.getString(0));
+        }
+        cursor.close();
+        db.close();
+        return packnames;
     }
 }

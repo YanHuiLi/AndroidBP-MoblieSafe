@@ -30,7 +30,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- @style/Theme.AppCompat.Light -->
     <application
@@ -78,7 +78,7 @@
 
         <service android:name=".service.LocationService" />
         <service android:name=".service.AddressService" />
-        <service android:name=".service.WatchDogService"/>
+        <service android:name=".service.WatchDogService" />
 
         <activity android:name=".CallSafeActivity" />
 
@@ -97,7 +97,14 @@
             android:exported="true" />
 
         <activity android:name=".AntivirusActivity" />
-        <activity android:name=".AppLockActivity"/>
+        <activity android:name=".AppLockActivity" />
+
+       <!--使用singleInstance开启这个特殊的EnterPwdActivity新建一个栈，结束了这个activity以后
+       机会回来此activity之前的activity里面-->
+
+        <activity android:name=".EnterPwdActivity"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"/>
     </application>
 
 </manifest>
