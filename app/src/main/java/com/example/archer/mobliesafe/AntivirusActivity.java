@@ -62,6 +62,9 @@ public class AntivirusActivity extends AppCompatActivity {
 
 
     private Handler handler=new Handler(){
+
+        private ScanInfo scanInfo;
+
         @Override
         public void handleMessage(Message msg) {
 
@@ -69,13 +72,14 @@ public class AntivirusActivity extends AppCompatActivity {
 
                 case  BEGING:
                     tv_antivirus.setText("初始化八核查杀");
+
                     break;
 
                 case  SCANNING:
                     // 病毒扫描中：
                     TextView child = new TextView(AntivirusActivity.this);
 
-                    ScanInfo scanInfo = (ScanInfo) msg.obj;
+                    scanInfo = (ScanInfo) msg.obj;
                     // 如果为true表示有病毒
                     if (scanInfo.desc) {
                         child.setTextColor(Color.RED);
