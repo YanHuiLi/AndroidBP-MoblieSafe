@@ -56,6 +56,8 @@ public class SettingActivity extends Activity{
         initWatchDog();
     }
 
+
+
     //初始化黑名单
     private void initBlackView() {
 

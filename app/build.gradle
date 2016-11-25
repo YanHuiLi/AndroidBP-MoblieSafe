@@ -22,6 +22,7 @@ android {
 }
 
 apply plugin: 'android-apt'
+apply plugin: 'com.antfortune.freeline'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -34,4 +35,5 @@ dependencies {
     compile 'org.apache.httpcomponents:httpcore:4.3.2'
     compile files('libs/xUtils-2.6.8.jar')
     compile 'com.google.code.gson:gson:2.8.0'
+
 }

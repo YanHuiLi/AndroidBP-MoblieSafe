@@ -109,7 +109,7 @@
             android:name=".EnterPwdActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance" />
-        <activity android:name=".CleanCache"></activity>
+        <activity android:name=".CleanCache" />
     </application>
 
 </manifest>

@@ -38,6 +38,7 @@ public class CleanCache extends AppCompatActivity {
             getCacheSize(packageInfo);
         }
 
+
     }
 
 
@@ -60,6 +61,7 @@ public class CleanCache extends AppCompatActivity {
 
 
         private  PackageInfo packageInfo;
+
         public MyIPackageStatsObserver(PackageInfo packageInfo) {
               this.packageInfo=packageInfo;
         }
@@ -74,6 +76,7 @@ public class CleanCache extends AppCompatActivity {
 
                 System.out.println("当前应用的名字："+packageInfo.applicationInfo.loadLabel(packageManager)+
                         " 缓存的大小： "+cacheSize);
+                System.out.println("world freeline");
 
             }
 
