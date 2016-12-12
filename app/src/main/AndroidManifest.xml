@@ -33,6 +33,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
 
+
     <!-- @style/Theme.AppCompat.Light -->
     <application
         android:allowBackup="true"

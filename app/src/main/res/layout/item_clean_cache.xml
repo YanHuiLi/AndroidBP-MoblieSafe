@@ -37,7 +37,8 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        
-        android:src="@drawable/list_button_clean_default" />
+        android:background="@drawable/selector_blacknumber_delete_btn_bg"
 
+         />
+    <!--android:src="@drawable/list_button_clean_default"-->
 </LinearLayout>

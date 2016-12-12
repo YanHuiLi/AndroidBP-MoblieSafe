@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_marginTop="4dp"
+        android:id="@+id/iv_task_icon1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="8dp"
+      />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_marginTop="4dp"
+            android:id="@+id/tv_ProcessName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="进程名称"
+            android:singleLine="true"
+            android:textColor="@color/black"/>
+
+
+        <TextView
+
+            android:id="@+id/tv_task_memory_size1"
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="内存占多多少兆"
+            android:layout_weight="11"
+            />
+
+
+
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <!--checkBox继承button
+
+        1.抢走焦点。
+        2.在listview里面使用的时候，用户体验差
+        3.因此要把android:focusable="false"
+            android:clickable="false"
+            设置成为false，让listview的item获得焦点
+            处理点击事件。
+
+            这很关键，当在使用道 checkbox的时候。
+        -->
+
+        <ImageView
+            android:id="@+id/iv_delete_cache"
+            android:background="@drawable/selector_blacknumber_delete_btn_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+
+
+            />
+    </RelativeLayout>
+
+
+</LinearLayout>

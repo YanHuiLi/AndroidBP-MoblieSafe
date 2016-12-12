@@ -4,18 +4,49 @@
     android:id="@+id/activity_clean_cache"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.archer.mobliesafe.CleanCache">
+    tools:context="com.example.archer.mobliesafe.CleanCache"
+    android:orientation="vertical">
 
 
-
-    <TextView
-        style="@style/TitleStyle"
-        android:text="缓存管理" />
-
-
-    <ListView
-        android:id="@+id/list_view_cache"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="缓存清理"
+            style="@style/TitleStyle"
+
+            />
+        <Button
+            android:id="@+id/bt_clear"
+            android:text="立即清理"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/pb_bar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/progress_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_name"
+        android:text="正在扫描..."
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/ll_parent"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </ScrollView>
 
 </LinearLayout>
