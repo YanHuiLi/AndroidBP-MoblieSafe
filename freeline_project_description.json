@@ -1,0 +1,116 @@
+{
+    "android_gradle_plugin_version": "2.2.3",
+    "apk_path": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\outputs\\apk\\app-debug.apk",
+    "apt": {
+        "app": {
+            "aptArgs": [
+                
+            ],
+            "aptOutput": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\generated\\source\\apt\\debug",
+            "disableDiscovery": false,
+            "enabled": true,
+            "processor": null,
+            "processorPath": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\libs\\android-butterknife-zelezny.jar;E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\libs\\xUtils-2.6.8.jar;C:\\Users\\Archer\\.gradle\\caches\\modules-2\\files-2.1\\com.github.hotchemi\\permissionsdispatcher-processor\\2.2.0\\e51a44f5543bcf5e7bf5c5018eebd7433886e3b7\\permissionsdispatcher-processor-2.2.0.jar;E:\\adt-bundle-windows-x86_64-20140702\\sdk\\extras\\android\\m2repository\\com\\android\\support\\appcompat-v7\\23.4.0\\appcompat-v7-23.4.0.aar;C:\\Users\\Archer\\.gradle\\caches\\modules-2\\files-2.1\\com.jakewharton\\butterknife\\7.0.0\\f1e24ac977505d1fdcabadaa5be1f41dc11c4286\\butterknife-7.0.0.jar;C:\\Users\\Archer\\.gradle\\caches\\modules-2\\files-2.1\\com.github.hotchemi\\permissionsdispatcher\\2.2.0\\c810c154af6dff3aba3a7943ecc445f932838195\\permissionsdispatcher-2.2.0.aar;C:\\Users\\Archer\\.gradle\\caches\\modules-2\\files-2.1\\org.apache.httpcomponents\\httpcore\\4.3.2\\31fbbff1ddbf98f3aa7377c94d33b0447c646b6e\\httpcore-4.3.2.jar;C:\\Users\\Archer\\.gradle\\caches\\modules-2\\files-2.1\\com.google.code.gson\\gson\\2.8.0\\c4ba5371a29ac9b2ad6129b1d39ea38750043eff\\gson-2.8.0.jar;C:\\Users\\Archer\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlin\\kotlin-stdlib\\1.0.4\\9c8d1a5d2eea3c9a7f58baa1a2fa11498cb41d0\\kotlin-stdlib-1.0.4.jar;C:\\Users\\Archer\\.gradle\\caches\\modules-2\\files-2.1\\com.squareup\\javapoet\\1.7.0\\4fdcf1fc27c1a8f55d1109df986c923152f07759\\javapoet-1.7.0.jar;E:\\adt-bundle-windows-x86_64-20140702\\sdk\\extras\\android\\m2repository\\com\\android\\support\\animated-vector-drawable\\23.4.0\\animated-vector-drawable-23.4.0.aar;E:\\adt-bundle-windows-x86_64-20140702\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-v4\\23.4.0\\support-v4-23.4.0.aar;E:\\adt-bundle-windows-x86_64-20140702\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-vector-drawable\\23.4.0\\support-vector-drawable-23.4.0.aar;C:\\Users\\Archer\\.gradle\\caches\\modules-2\\files-2.1\\org.jetbrains.kotlin\\kotlin-runtime\\1.0.4\\8e25da5e31669f5acf514bdd99b94ff5c7003b3b\\kotlin-runtime-1.0.4.jar;E:\\adt-bundle-windows-x86_64-20140702\\sdk\\extras\\android\\m2repository\\com\\android\\support\\support-annotations\\23.4.0\\support-annotations-23.4.0.jar;E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.4.0\\jars\\classes.jar;E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\intermediates\\exploded-aar\\com.android.support\\animated-vector-drawable\\23.4.0\\jars\\classes.jar;E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-vector-drawable\\23.4.0\\jars\\classes.jar;E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\intermediates\\exploded-aar\\com.github.hotchemi\\permissionsdispatcher\\2.2.0\\jars\\classes.jar;E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-v4\\23.4.0\\jars\\classes.jar;E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\intermediates\\exploded-aar\\com.android.support\\support-v4\\23.4.0\\jars\\libs\\internal_impl-23.4.0.jar;E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\intermediates\\exploded-aar\\com.antfortune.freeline\\runtime\\0.8.3\\jars\\classes.jar"
+        }
+    },
+    "apt_libraries": {
+        "dagger": false,
+        "butterknife": true
+    },
+    "auto_dependency": true,
+    "build_cache_dir": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\freeline",
+    "build_directory": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build",
+    "build_script": "gradlew.bat :app:assembleDebug",
+    "build_script_work_directory": "",
+    "build_tools_directory": "E:\\adt-bundle-windows-x86_64-20140702\\sdk\\build-tools\\25.0.0",
+    "build_tools_version": "25.0.0",
+    "compile_sdk_directory": "E:\\adt-bundle-windows-x86_64-20140702\\sdk\\platforms\\android-23",
+    "compile_sdk_version": "android-23",
+    "databinding": [
+        
+    ],
+    "databinding_compiler_jar": "",
+    "databinding_modules": [
+        
+    ],
+    "debug_package": "com.example.archer.mobliesafe",
+    "exclude_dep_res_paths": [
+        
+    ],
+    "extra_dep_res_paths": [
+        
+    ],
+    "freeline_cache_dir": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe",
+    "freeline_gradle_plugin_version": "0.8.3",
+    "java_home": "C:\\Program Files\\Java\\jdk1.8.0_73",
+    "launcher": "com.example.archer.mobliesafe.SplashActivity",
+    "main_assets_directory": [
+        "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\debug\\assets",
+        "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\assets"
+    ],
+    "main_jniLibs_directory": [
+        "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\debug\\jniLibs",
+        "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\jniLibs"
+    ],
+    "main_jni_directory": [
+        "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\debug\\jni",
+        "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\jni"
+    ],
+    "main_manifest_path": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\AndroidManifest.xml",
+    "main_project_dir": "app",
+    "main_project_name": "app",
+    "main_r_path": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\build\\generated\\source\\r\\debug\\R.java",
+    "main_res_directory": [
+        "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\debug\\res",
+        "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\res"
+    ],
+    "main_src_directory": [
+        "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\debug\\java",
+        "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\java"
+    ],
+    "module_dependencies": {
+        "app": [
+            
+        ]
+    },
+    "modules": [
+        {
+            "name": "app",
+            "path": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app"
+        }
+    ],
+    "package": "com.example.archer.mobliesafe",
+    "product_flavor": "",
+    "project_source_sets": {
+        "app": {
+            "main_assets_directory": [
+                "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\debug\\assets",
+                "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\assets"
+            ],
+            "main_jniLibs_directory": [
+                "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\debug\\jniLibs",
+                "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\jniLibs"
+            ],
+            "main_jni_directory": [
+                "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\debug\\jni",
+                "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\jni"
+            ],
+            "main_manifest_path": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\AndroidManifest.xml",
+            "main_res_directory": [
+                "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\debug\\res",
+                "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\res"
+            ],
+            "main_src_directory": [
+                "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\debug\\java",
+                "E:\\Workplace\\AndroidBestPractice\\MoblieSafe\\app\\src\\main\\java"
+            ]
+        }
+    },
+    "project_type": "gradle",
+    "retrolambda": {
+        
+    },
+    "root_dir": "E:\\Workplace\\AndroidBestPractice\\MoblieSafe",
+    "sdk_directory": "E:\\adt-bundle-windows-x86_64-20140702\\sdk",
+    "use_jdk8": true
+}
